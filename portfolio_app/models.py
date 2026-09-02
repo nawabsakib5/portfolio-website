@@ -2,12 +2,13 @@ from django.db import models
 
 class Profile(models.Model):
     name = models.CharField(max_length=100)
-    title = models.CharField(max_length=200)  # e.g. "Software Developer"
+    title = models.CharField(max_length=200, help_text="e.g. Backend Developer")
     bio = models.TextField()
     photo = models.ImageField(upload_to='profile/', blank=True, null=True)
     email = models.EmailField()
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
+    facebook_url = models.URLField(blank=True)
 
     def __str__(self):
         return self.name

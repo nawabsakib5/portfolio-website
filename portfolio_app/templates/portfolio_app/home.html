@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ profile.name }} - Portfolio</title>
+</head>
+<body>
+    <h1>{{ profile.name }}</h1>
+    <h3>{{ profile.title }}</h3>
+    <p>{{ profile.bio }}</p>
+    <p>Email: {{ profile.email }}</p>
+
+    <hr>
+
+    <h2>Projects</h2>
+    {% for project in projects %}
+        <div>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            <p>Tech: {{ project.tech_used }}</p>
+            {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank">GitHub</a>
+            {% endif %}
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>

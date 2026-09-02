@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<section class="hero" id="about">
+<section class="hero fade-section" id="about">
     <div class="container hero-content">
         {% if profile.photo %}
             <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="profile-photo">
@@ -18,7 +18,7 @@
     </div>
 </section>
 
-<section class="section" id="experience">
+<section class="section fade-section" id="experience">
     <div class="container">
         <h2 class="section-title">Experience</h2>
         <div class="timeline">
@@ -40,12 +40,14 @@
                 <h3>{{ edu.degree }}</h3>
                 <p class="org">{{ edu.institution }} &middot; {{ edu.year }}</p>
             </div>
+            {% empty %}
+            <p>No education added yet.</p>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="section alt-bg" id="projects">
+<section class="section alt-bg fade-section" id="projects">
     <div class="container">
         <h2 class="section-title">Projects</h2>
         <div class="grid">
@@ -71,7 +73,7 @@
     </div>
 </section>
 
-<section class="section" id="skills">
+<section class="section fade-section" id="skills">
     <div class="container">
         <h2 class="section-title">Skills</h2>
         <div class="skills-list">
@@ -84,7 +86,7 @@
     </div>
 </section>
 
-<section class="section alt-bg" id="contact">
+<section class="section alt-bg fade-section" id="contact">
     <div class="container">
         <h2 class="section-title">Contact</h2>
         <p>Email: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>

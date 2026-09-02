@@ -1,28 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ profile.name }} - Portfolio</title>
-</head>
-<body>
-    <h1>{{ profile.name }}</h1>
-    <h3>{{ profile.title }}</h3>
-    <p>{{ profile.bio }}</p>
-    <p>Email: {{ profile.email }}</p>
+{% extends 'portfolio_app/base.html' %}
 
-    <hr>
+{% block content %}
 
-    <h2>Projects</h2>
-    {% for project in projects %}
-        <div>
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description }}</p>
-            <p>Tech: {{ project.tech_used }}</p>
-            {% if project.github_link %}
-                <a href="{{ project.github_link }}" target="_blank">GitHub</a>
-            {% endif %}
+<section class="hero" id="about">
+    <div class="container hero-content">
+        {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="profile-photo">
+        {% endif %}
+        <h1>{{ profile.name }}</h1>
+        <h3>{{ profile.title }}</h3>
+        <p class="bio">{{ profile.bio }}</p>
+        <div class="social-links">
+            {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank">GitHub</a>{% endif %}
+            {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn</a>{% endif %}
+            {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank">Facebook</a>{% endif %}
         </div>
-        <hr>
-    {% endfor %}
-</body>
-</html>
+    </div>
+</section>
+
+<section class="section" id="experience">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+            {% for exp in experiences %}
+            <div class="timeline-item">
+                <h3>{{ exp.role }}</h3>
+                <p class="org">{{ exp.organization }} &middot; {{ exp.start_date }} - {{ exp.end_date|default:"Present" }}</p>
+                <p>{{ exp.description }}</p>
+            </div>
+            {% empty %}
+            <p>No experience added yet.</p>
+            {% endfor %}
+        </div>
+
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+            {% for edu in educations %}
+            <div class="timeline-item">
+                <h3>{{ edu.degree }}</h3>
+                <p class="org">{{ edu.institution }} &middot; {{ edu.year }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section alt-bg" id="projects">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="grid">
+            {% for project in projects %}
+            <div class="card">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="card-img">
+                {% endif %}
+                <div class="card-body">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:25 }}</p>
+                    <p class="tech">{{ project.tech_used }}</p>
+                    <div class="card-links">
+                        {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank">GitHub</a>{% endif %}
+                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No projects added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="skills">
+    <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-list">
+            {% for skill in skills %}
+                <span class="skill-badge">{{ skill.name }}</span>
+            {% empty %}
+                <p>No skills added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section alt-bg" id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <p>Email: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+    </div>
+</section>
+
+{% endblock %}

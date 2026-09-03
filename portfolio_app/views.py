@@ -6,7 +6,7 @@ from .models import*
 def home(request):
     profile = Profile.objects.first()
     projects = Project.objects.all()
-    skills = Skill.objects.all()
+    skills = Skill.objects.all().order_by('category')  # Updated
     experiences = Experience.objects.all()
     educations = Education.objects.all()
     certificates = Certificate.objects.all()

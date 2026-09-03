@@ -29,8 +29,19 @@ class Project(models.Model):
     
 
 
+from django.db import models
+
 class Skill(models.Model):
     name = models.CharField(max_length=100)
+    
+    # Devicon class name (ঐচ্ছিক: যদি কোনো নির্দিষ্ট নাম অটো ম্যাচ না করে তবে ম্যানুয়ালি দেওয়ার জন্য)
+    icon_class = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True, 
+        help_text="খালি রাখলে Name অনুযায়ী অটো আইকন সেট হবে।"
+    )
+    
     CATEGORY_CHOICES = [
         ('language', 'Language'),
         ('framework', 'Framework'),
@@ -40,10 +51,38 @@ class Skill(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
 
     class Meta:
-        ordering = ['category', 'name']  # Added
+        ordering = ['category', 'name']
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_icon_class(self):
+        """
+        icon_class খালি থাকলে Skill-এর name থেকে অটোমেটিক Devicon class জেনারেট করবে।
+        """
+        if self.icon_class:
+            return self.icon_class
+        
+        # নাম ছোট হাতের করে স্পেস বাদ দেওয়া
+        clean_name = self.name.lower().replace(" ", "").replace(".", "")
+        
+        # দেবিকন নামের সাথে যদি স্কিল নেম সরাসরি না মিলে, সেটার জন্য কাস্টম ম্যাপিং
+        custom_mapping = {
+            'c++': 'cplusplus',
+            'c#': 'csharp',
+            'js': 'javascript',
+            'ts': 'typescript',
+            'node': 'nodejs',
+            'express': 'express',
+            'react': 'react',
+            'vue': 'vuejs',
+            'postgres': 'postgresql',
+            'postgreSQL': 'postgresql',
+        }
+        
+        icon_name = custom_mapping.get(clean_name, clean_name)
+        return f"devicon-{icon_name}-plain colored"
 
 
 class Experience(models.Model):

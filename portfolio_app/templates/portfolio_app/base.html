@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ profile.name }}{% endblock %}</title>
+
+    <!-- Devicon CDN (SVG/Vector Tech Icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
     <style>
         :root {
             --bg: #050508;
@@ -421,6 +425,9 @@
         .skills-list { display: flex; flex-wrap: wrap; gap: 12px; }
 
         .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             padding: 10px 22px;
             border-radius: 30px;
             font-size: 0.88rem;
@@ -430,6 +437,12 @@
             backdrop-filter: blur(10px);
             cursor: default;
             transition: all 0.3s;
+        }
+
+        /* Devicon SVG Styles */
+        .skill-badge i {
+            font-size: 1.3rem;
+            line-height: 1;
         }
 
         .skill-badge:hover {

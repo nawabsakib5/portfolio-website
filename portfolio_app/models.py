@@ -68,3 +68,18 @@ class Education(models.Model):
 
     def __str__(self):
         return f"{self.degree} - {self.institution}"
+
+
+class Certificate(models.Model):
+    title = models.CharField(max_length=200, help_text="e.g. Web Application Development with Python")
+    issuer = models.CharField(max_length=150, help_text="e.g. NSDA")
+    level = models.CharField(max_length=50, blank=True, help_text="e.g. Level-4, 360 hours")
+    year = models.CharField(max_length=50, blank=True)
+    certificate_file = models.FileField(upload_to='certificates/', blank=True, null=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title

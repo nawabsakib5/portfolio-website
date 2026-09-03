@@ -3,11 +3,14 @@
 {% block content %}
 
 <section class="hero fade-section visible" id="about">
-    <div class="container">
+    <div class="container hero-inner">
         {% if profile.photo %}
+        <div class="profile-photo-wrap">
             <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="profile-photo">
+            <div class="profile-photo-ring"></div>
+        </div>
         {% endif %}
-        <span class="eyebrow">Portfolio</span>
+        <div class="eyebrow">Available for work</div>
         <h1>{{ profile.name }}</h1>
         <h3>{{ profile.title }}</h3>
         <p class="bio">{{ profile.bio }}</p>
@@ -16,9 +19,17 @@
             {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn</a>{% endif %}
             {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank">Facebook</a>{% endif %}
         </div>
+        {% if profile.cv %}
+        <div class="cv-buttons">
+            <a href="{{ profile.cv.url }}" target="_blank" class="cv-btn">📄 View CV</a>
+            <a href="{{ profile.cv.url }}" download class="cv-btn cv-btn-outline">⬇ Download CV</a>
+        </div>
+        {% endif %}
     </div>
-    <div class="scroll-cue">Scroll Down</div>
+    <div class="scroll-cue">↓ Scroll</div>
 </section>
+
+<div class="glass-divider"></div>
 
 <section class="section fade-section" id="experience">
     <div class="container">
@@ -28,15 +39,15 @@
             {% for exp in experiences %}
             <div class="timeline-item">
                 <h3>{{ exp.role }}</h3>
-                <p class="org">{{ exp.organization }} &middot; {{ exp.start_date }} - {{ exp.end_date|default:"Present" }}</p>
+                <p class="org">{{ exp.organization }} &middot; {{ exp.start_date }} — {{ exp.end_date|default:"Present" }}</p>
                 <p>{{ exp.description }}</p>
             </div>
             {% empty %}
-            <p style="color: var(--text-dim);">No experience added yet.</p>
+            <p style="color:var(--text-dim)">No experience added yet.</p>
             {% endfor %}
         </div>
 
-        <h3 class="subhead">Education</h3>
+        <p class="subhead">Education</p>
         <div class="timeline">
             {% for edu in educations %}
             <div class="timeline-item">
@@ -44,28 +55,36 @@
                 <p class="org">{{ edu.institution }} &middot; {{ edu.year }}</p>
             </div>
             {% empty %}
-            <p style="color: var(--text-dim);">No education added yet.</p>
+            <p style="color:var(--text-dim)">No education added yet.</p>
             {% endfor %}
         </div>
 
-        <h3 class="subhead">Certificates</h3>
-        <div class="timeline">
+        <p class="subhead">Certificates</p>
+        <div class="cert-grid">
             {% for cert in certificates %}
-            <div class="timeline-item">
-                <h3>{{ cert.title }}</h3>
-                <p class="org">{{ cert.issuer }} {% if cert.level %}&middot; {{ cert.level }}{% endif %} {% if cert.year %}&middot; {{ cert.year }}{% endif %}</p>
+            <div class="cert-card">
+                <div class="cert-icon">🏅</div>
+                <div class="cert-info">
+                    <h3>{{ cert.title }}</h3>
+                    <p class="org">{{ cert.issuer }}{% if cert.level %} &middot; {{ cert.level }}{% endif %}{% if cert.year %} &middot; {{ cert.year }}{% endif %}</p>
+                </div>
                 {% if cert.certificate_file %}
-                    <a href="{{ cert.certificate_file.url }}" target="_blank">View Certificate →</a>
+                <div class="cert-actions">
+                    <a href="{{ cert.certificate_file.url }}" target="_blank">View</a>
+                    <a href="{{ cert.certificate_file.url }}" download>Download</a>
+                </div>
                 {% endif %}
             </div>
             {% empty %}
-            <p style="color: var(--text-dim);">No certificates added yet.</p>
+            <p style="color:var(--text-dim)">No certificates added yet.</p>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="section alt-bg fade-section" id="projects">
+<div class="glass-divider"></div>
+
+<section class="section fade-section" id="projects">
     <div class="container">
         <span class="section-tag">Portfolio</span>
         <h2 class="section-title">Selected Work</h2>
@@ -81,21 +100,24 @@
                     <h3>{{ project.title }}</h3>
                     <p>{{ project.description|truncatewords:22 }}</p>
                     <div class="tech-tags">
-                        {% for tech in project.tech_used|cut:" "|slice:":200" %}{% endfor %}
-                        {% for t in project.tech_used.split %}{% endfor %}
+                        {% for tech in project.tech_used.split %}
+                        <span class="tech-tag">{{ tech|cut:"," }}</span>
+                        {% endfor %}
                     </div>
                     <div class="card-links">
-                        {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank">GitHub</a>{% endif %}
-                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live Site</a>{% endif %}
+                        {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank">GitHub →</a>{% endif %}
+                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live →</a>{% endif %}
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p style="color: var(--text-dim);">No projects added yet.</p>
+            <p style="color:var(--text-dim)">No projects added yet.</p>
             {% endfor %}
         </div>
     </div>
 </section>
+
+<div class="glass-divider"></div>
 
 <section class="section fade-section" id="skills">
     <div class="container">
@@ -103,20 +125,24 @@
         <h2 class="section-title">Skills</h2>
         <div class="skills-list">
             {% for skill in skills %}
-                <span class="skill-badge">{{ skill.name }}</span>
+            <span class="skill-badge">{{ skill.name }}</span>
             {% empty %}
-                <p style="color: var(--text-dim);">No skills added yet.</p>
+            <p style="color:var(--text-dim)">No skills added yet.</p>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="section alt-bg fade-section" id="contact">
+<div class="glass-divider"></div>
+
+<section class="section fade-section" id="contact">
     <div class="container">
         <div class="contact-box">
             <span class="section-tag">Get in touch</span>
-            <h2 class="section-title" style="margin-bottom: 0;">Let's build something great</h2>
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="contact-sub">Open for freelance, collaboration, or full-time opportunities.</p>
             <a href="mailto:{{ profile.email }}" class="email-link">{{ profile.email }}</a>
+            <a href="mailto:{{ profile.linkdine }}" class="email-link">{{ profile.linkdine }}</a>
         </div>
     </div>
 </section>

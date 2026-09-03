@@ -39,6 +39,9 @@ class Skill(models.Model):
     ]
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
 
+    class Meta:
+        ordering = ['category', 'name']  # Added
+
     def __str__(self):
         return self.name
 

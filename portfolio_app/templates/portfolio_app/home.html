@@ -6,70 +6,123 @@
 {% block content %}
 
 <style>
-    /* Hero section with dark overlay and bracket button */
+    /* ── FULLSCREEN HERO SECTION ── */
+    .hero {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        margin-left: calc(-50vw + 50%); /* edge-to-edge breakout */
+        margin-top: -80px; /* navbar overlap adjusting height if needed */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #050508;
+    }
+
+    /* Background image positioning like the reference layout */
     .hero-bg {
         position: absolute;
         inset: 0;
-        z-index: -1;
-        overflow: hidden;
+        z-index: 1;
     }
+
     .hero-bg img {
-        width: 100%; height: 100%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        object-position: center top;
-        filter: grayscale(60%) brightness(0.45);
+        object-position: center 25%; /* Image subject focus center-crop */
+        filter: grayscale(85%) contrast(110%) brightness(0.4);
     }
+
+    /* Dark vignette and radial gradient overlay */
     .hero-bg::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg,
-            rgba(5,5,8,0.35) 0%,
-            rgba(5,5,8,0.65) 50%,
-            var(--bg, #090a0f) 96%);
-    }
-    .hero.has-photo .profile-photo-wrap,
-    .hero.has-photo .eyebrow,
-    .hero.has-photo h1,
-    .hero.has-photo h3,
-    .hero.has-photo .bio,
-    .hero.has-photo .social-links,
-    .hero.has-photo .cv-buttons { 
-        position: relative; 
-        z-index: 2; 
+        background: radial-gradient(circle at center, rgba(5,5,8,0.2) 0%, rgba(5,5,8,0.85) 80%, #050508 100%);
     }
 
-    /* Bracket style button matching your reference image */
+    /* Content styling aligned exactly like reference image */
+    .hero-inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 900px;
+        padding: 0 20px;
+    }
+
+    .hero-inner .eyebrow {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        color: #e2e8f0;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+
+    .hero-inner h1 {
+        font-size: clamp(3.5rem, 8vw, 6.5rem);
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: -1px;
+        color: #ffffff;
+        text-transform: uppercase;
+        margin: 0 0 10px 0;
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .hero-inner h3 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #94a3b8;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .hero-inner .bio {
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        max-width: 550px;
+        margin: 0 auto 30px auto;
+        line-height: 1.6;
+    }
+
+    /* Exact Bracket CTA Button from the reference design */
     .bracket-btn {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 14px 30px;
-        border-top: 1px solid var(--accent, #fff);
-        border-bottom: 1px solid var(--accent, #fff);
-        color: var(--text, #fff);
+        gap: 12px;
+        padding: 16px 36px;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        color: #ffffff;
         text-decoration: none;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 700;
-        letter-spacing: 3px;
+        letter-spacing: 4px;
         text-transform: uppercase;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
         position: relative;
-        z-index: 2;
+        background: transparent;
     }
     .bracket-btn::before,
     .bracket-btn::after {
         content: '';
         position: absolute;
-        top: -1px; bottom: -1px;
-        width: 8px;
-        border: 1px solid var(--accent, #fff);
+        top: -1px; 
+        bottom: -1px;
+        width: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
     }
-    .bracket-btn::before { left: -8px; border-right: none; }
-    .bracket-btn::after { right: -8px; border-left: none; }
+    .bracket-btn::before { left: -10px; border-right: none; }
+    .bracket-btn::after { right: -10px; border-left: none; }
     .bracket-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-        letter-spacing: 4px;
+        background: rgba(255, 255, 255, 0.12);
+        letter-spacing: 5px;
+        border-color: #ffffff;
     }
 
     .about-text { max-width: 68ch; color: var(--text-mid, #ccc); font-size: 1rem; }
@@ -78,7 +131,7 @@
 </style>
 
 <!-- ── HERO SECTION ── -->
-<section class="hero {% if profile.photo %}has-photo{% endif %}" id="home">
+<section class="hero" id="home">
     {% if profile.photo %}
     <div class="hero-bg">
         <img src="{{ profile.photo.url }}" alt="{{ profile.name }}">
@@ -86,18 +139,12 @@
     {% endif %}
 
     <div class="hero-inner">
-        {% if not profile.photo %}
-        <div class="profile-photo-wrap">
-            <div class="profile-photo-ring"></div>
-        </div>
-        {% endif %}
+        <span class="eyebrow">{{ profile.name|upper }}</span>
+        <h1>{{ profile.title|default:profile.name|upper }}</h1>
+        <h3>{{ profile.name }}</h3>
+        <p class="bio">{{ profile.bio|truncatewords:28 }}</p>
 
-        <span class="eyebrow">{{ profile.name|upper }}'S PORTFOLIO</span>
-        <h1>{{ profile.name|upper }}</h1>
-        <h3>{{ profile.title }}</h3>
-        <p class="bio">{{ profile.bio|truncatewords:32 }}</p>
-
-        <div class="social-links">
+        <div class="social-links" style="margin-bottom: 25px;">
             {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
             {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
             {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
@@ -105,14 +152,12 @@
         </div>
 
         <div class="cv-buttons">
-            <a href="#projects" class="bracket-btn">View Work</a>
+            <a href="#projects" class="bracket-btn">Live Demos</a>
             {% if profile.cv %}
-            <a href="{{ profile.cv.url }}" class="cv-btn cv-btn-outline" target="_blank" rel="noopener">Download CV</a>
+            <a href="{{ profile.cv.url }}" class="cv-btn cv-btn-outline" target="_blank" rel="noopener" style="margin-left: 15px;">Download CV</a>
             {% endif %}
         </div>
     </div>
-
-    <div class="scroll-cue">Scroll ↓</div>
 </section>
 
 <div class="container">

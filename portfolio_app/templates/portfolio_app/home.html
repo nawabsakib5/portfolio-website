@@ -184,6 +184,37 @@
         letter-spacing: 1px;
         margin-top: 6px;
     }
+
+    /* ── SKILLS FILTER BUTTONS STYLES ── */
+    .skills-filter-btns {
+        margin-bottom: 25px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #cbd5e1;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background: #60a5fa;
+        color: #050508;
+        border-color: #60a5fa;
+        box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+    }
+
+    .skill-category-group {
+        transition: all 0.4s ease;
+    }
 </style>
 
 <!-- ── HERO SECTION ── -->
@@ -325,24 +356,34 @@
 
     <div class="glass-divider"></div>
 
-    <!-- ── SKILLS ── -->
+    <!-- ── SKILLS (CATEGORIZED & FILTERABLE) ── -->
     <section class="section fade-section" id="skills">
         <span class="section-tag">Toolbox</span>
-        <h2 class="section-title">Skills</h2>
+        <h2 class="section-title">Skills &amp; Technologies</h2>
+
+        <!-- Filter Buttons -->
+        <div class="skills-filter-btns">
+            <button class="filter-btn active" onclick="filterSkills('all', this)">All</button>
+            <button class="filter-btn" onclick="filterSkills('backend', this)">Backend &amp; Languages</button>
+            <button class="filter-btn" onclick="filterSkills('database', this)">Databases</button>
+            <button class="filter-btn" onclick="filterSkills('devops', this)">DevOps &amp; Tools</button>
+        </div>
 
         {% regroup skills by get_category_display as skill_categories %}
         {% for category in skill_categories %}
-        <div class="subhead">{{ category.grouper }}</div>
-        <div class="skills-list" style="margin-bottom: 24px;">
-            {% for skill in category.list %}
-            <span class="skill-badge">
-                <!-- স্বয়ংক্রিয়ভাবে মডেলের get_icon_class পদ্ধতি থেকে দেবিকন আইকন রেন্ডার করবে -->
-                {% if skill.get_icon_class %}
-                    <i class="{{ skill.get_icon_class }}"></i>
-                {% endif %}
-                {{ skill.name }}
-            </span>
-            {% endfor %}
+        <div class="skill-category-group" data-category="{{ category.grouper|slugify }}">
+            <div class="subhead">{{ category.grouper }}</div>
+            <div class="skills-list" style="margin-bottom: 24px;">
+                {% for skill in category.list %}
+                <span class="skill-badge">
+                    <!-- স্বয়ংক্রিয়ভাবে মডেলের get_icon_class পদ্ধতি থেকে দেবিকন আইকন রেন্ডার করবে -->
+                    {% if skill.get_icon_class %}
+                        <i class="{{ skill.get_icon_class }}"></i>
+                    {% endif %}
+                    {{ skill.name }}
+                </span>
+                {% endfor %}
+            </div>
         </div>
         {% empty %}
         <p class="empty-note">No skills added yet.</p>
@@ -422,8 +463,9 @@
 
 </div>
 
-<!-- ── GITHUB DYNAMIC STATS & ANIMATION SCRIPT ── -->
+<!-- ── SCRIPTS ── -->
 <script>
+    /* ── GITHUB STATS & ANIMATION SCRIPT ── */
     {% if profile.github_url %}
     // GitHub URL থেকে ইউজারনেম বের করার লজিক
     const githubUrl = "{{ profile.github_url }}";
@@ -507,6 +549,30 @@
                 }, stepTime);
             });
         }
+    }
+
+    /* ── FILTER SKILLS LOGIC ── */
+    function filterSkills(category, btnElement) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        const groups = document.querySelectorAll('.skill-category-group');
+
+        groups.forEach(group => {
+            const catName = group.getAttribute('data-category').toLowerCase();
+            
+            if (category === 'all') {
+                group.style.display = 'block';
+            } else if (category === 'backend' && (catName.includes('backend') || catName.includes('language') || catName.includes('framework'))) {
+                group.style.display = 'block';
+            } else if (category === 'database' && (catName.includes('database') || catName.includes('db'))) {
+                group.style.display = 'block';
+            } else if (category === 'devops' && (catName.includes('tool') || catName.includes('devops') || catName.includes('other'))) {
+                group.style.display = 'block';
+            } else {
+                group.style.display = 'none';
+            }
+        });
     }
 
     window.addEventListener('scroll', startCounters);

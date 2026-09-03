@@ -45,6 +45,7 @@ class Skill(models.Model):
     CATEGORY_CHOICES = [
         ('language', 'Language'),
         ('framework', 'Framework'),
+        ('database', 'Database'),
         ('tool', 'Tool'),
         ('other', 'Other'),
     ]

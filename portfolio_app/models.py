@@ -29,12 +29,12 @@ class Project(models.Model):
     
 
 
+
+
 from django.db import models
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    
-    # Devicon class name (ঐচ্ছিক: যদি কোনো নির্দিষ্ট নাম অটো ম্যাচ না করে তবে ম্যানুয়ালি দেওয়ার জন্য)
     icon_class = models.CharField(
         max_length=100, 
         blank=True, 
@@ -58,31 +58,43 @@ class Skill(models.Model):
 
     @property
     def get_icon_class(self):
-        """
-        icon_class খালি থাকলে Skill-এর name থেকে অটোমেটিক Devicon class জেনারেট করবে।
-        """
+        
         if self.icon_class:
             return self.icon_class
         
-        # নাম ছোট হাতের করে স্পেস বাদ দেওয়া
-        clean_name = self.name.lower().replace(" ", "").replace(".", "")
+        name_lower = self.name.lower().strip()
         
-        # দেবিকন নামের সাথে যদি স্কিল নেম সরাসরি না মিলে, সেটার জন্য কাস্টম ম্যাপিং
-        custom_mapping = {
-            'c++': 'cplusplus',
-            'c#': 'csharp',
-            'js': 'javascript',
-            'ts': 'typescript',
-            'node': 'nodejs',
-            'express': 'express',
-            'react': 'react',
-            'vue': 'vuejs',
-            'postgres': 'postgresql',
-            'postgreSQL': 'postgresql',
+        # ছবিতে থাকা প্রতিটি আইটেমের জন্য Devicon ক্লাসের লিস্ট
+        mapping = {
+            # Framework
+            'django': 'devicon-django-plain colored',
+            
+            # Language
+            'css': 'devicon-css3-plain colored',
+            'html': 'devicon-html5-plain colored',
+            'python': 'devicon-python-plain colored',
+            'sql': 'devicon-sqldeveloper-plain colored',
+            
+            # Tool
+            'celery / redis': 'devicon-redis-plain colored',
+            'redis': 'devicon-redis-plain colored',
+            'cloudinary': 'devicon-canva-original colored', # Cloudinary এর লোগো না থাকলে এরুপ ব্যবহার করা যায়
+            'git & github': 'devicon-github-original colored',
+            'git': 'devicon-git-plain colored',
+            'github': 'devicon-github-original colored',
+            'gunicorn': 'devicon-python-plain colored',
+            'postgresql': 'devicon-postgresql-plain colored',
+            'render': 'devicon-express-original colored',
+            'sqlite': 'devicon-sqlite-plain colored',
+            'whitenoise': 'devicon-django-plain colored',
+            
+            # Other
+            'database design': 'devicon-postgresql-plain colored',
+            'graphic design (freelancing)': 'devicon-figma-plain colored',
         }
         
-        icon_name = custom_mapping.get(clean_name, clean_name)
-        return f"devicon-{icon_name}-plain colored"
+        
+        return mapping.get(name_lower, f"devicon-{name_lower.replace(' ', '')}-plain colored")
 
 
 class Experience(models.Model):

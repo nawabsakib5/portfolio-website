@@ -375,8 +375,7 @@
             <div class="subhead">{{ category.grouper }}</div>
             <div class="skills-list" style="margin-bottom: 24px;">
                 {% for skill in category.list %}
-                <span class="skill-badge">
-                    <!-- স্বয়ংক্রিয়ভাবে মডেলের get_icon_class পদ্ধতি থেকে দেবিকন আইকন রেন্ডার করবে -->
+                <span class="skill-badge" data-skill-name="{{ skill.name|lower }}">
                     {% if skill.get_icon_class %}
                         <i class="{{ skill.get_icon_class }}"></i>
                     {% endif %}
@@ -467,7 +466,6 @@
 <script>
     /* ── GITHUB STATS & ANIMATION SCRIPT ── */
     {% if profile.github_url %}
-    // GitHub URL থেকে ইউজারনেম বের করার লজিক
     const githubUrl = "{{ profile.github_url }}";
     const githubUsername = githubUrl.replace(/\/$/, "").split("/").pop();
 
@@ -551,26 +549,58 @@
         }
     }
 
-    /* ── FILTER SKILLS LOGIC ── */
+    /* ── DYNAMIC SKILLS FILTER LOGIC (SMART & HYBRID) ── */
     function filterSkills(category, btnElement) {
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
 
         const groups = document.querySelectorAll('.skill-category-group');
+        const dbKeywords = ['sql', 'postgres', 'mysql', 'mongo', 'redis', 'oracle', 'sqlite', 'database', 'db', 'firebase', 'mariadb', 'cassandra'];
 
         groups.forEach(group => {
             const catName = group.getAttribute('data-category').toLowerCase();
-            
+            const badges = group.querySelectorAll('.skill-badge');
+
             if (category === 'all') {
                 group.style.display = 'block';
-            } else if (category === 'backend' && (catName.includes('backend') || catName.includes('language') || catName.includes('framework'))) {
-                group.style.display = 'block';
-            } else if (category === 'database' && (catName.includes('database') || catName.includes('db'))) {
-                group.style.display = 'block';
-            } else if (category === 'devops' && (catName.includes('tool') || catName.includes('devops') || catName.includes('other'))) {
-                group.style.display = 'block';
-            } else {
-                group.style.display = 'none';
+                badges.forEach(b => b.style.display = 'inline-flex');
+            } else if (category === 'database') {
+                let hasMatchedSkill = false;
+
+                // ১. যদি ক্যাটাগরির নামেই database/db থাকে
+                if (catName.includes('database') || catName.includes('db')) {
+                    hasMatchedSkill = true;
+                    badges.forEach(b => b.style.display = 'inline-flex');
+                } else {
+                    // ২. অথবা কোনো স্কিলের নামে ডাটাবেজের নাম থাকে
+                    badges.forEach(badge => {
+                        const skillName = badge.getAttribute('data-skill-name') || '';
+                        const isDbSkill = dbKeywords.some(kw => skillName.includes(kw));
+                        if (isDbSkill) {
+                            badge.style.display = 'inline-flex';
+                            hasMatchedSkill = true;
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    });
+                }
+
+                group.style.display = hasMatchedSkill ? 'block' : 'none';
+
+            } else if (category === 'backend') {
+                badges.forEach(b => b.style.display = 'inline-flex');
+                if (catName.includes('backend') || catName.includes('language') || catName.includes('framework')) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            } else if (category === 'devops') {
+                badges.forEach(b => b.style.display = 'inline-flex');
+                if (catName.includes('tool') || catName.includes('devops') || catName.includes('other')) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
             }
         });
     }

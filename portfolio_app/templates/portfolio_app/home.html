@@ -1,150 +1,284 @@
-{% extends 'portfolio_app/base.html' %}
+{% extends "portfolio_app/base.html" %}
+{% load static %}
+
+{% block title %}{{ profile.name }} — {{ profile.title }}{% endblock %}
 
 {% block content %}
 
-<section class="hero fade-section visible" id="about">
-    <div class="container hero-inner">
-        {% if profile.photo %}
+<style>
+    /* Hero section with dark overlay and bracket button */
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+    }
+    .hero-bg img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        filter: grayscale(60%) brightness(0.45);
+    }
+    .hero-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg,
+            rgba(5,5,8,0.35) 0%,
+            rgba(5,5,8,0.65) 50%,
+            var(--bg, #090a0f) 96%);
+    }
+    .hero.has-photo .profile-photo-wrap,
+    .hero.has-photo .eyebrow,
+    .hero.has-photo h1,
+    .hero.has-photo h3,
+    .hero.has-photo .bio,
+    .hero.has-photo .social-links,
+    .hero.has-photo .cv-buttons { 
+        position: relative; 
+        z-index: 2; 
+    }
+
+    /* Bracket style button matching your reference image */
+    .bracket-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 30px;
+        border-top: 1px solid var(--accent, #fff);
+        border-bottom: 1px solid var(--accent, #fff);
+        color: var(--text, #fff);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        transition: all 0.3s;
+        position: relative;
+        z-index: 2;
+    }
+    .bracket-btn::before,
+    .bracket-btn::after {
+        content: '';
+        position: absolute;
+        top: -1px; bottom: -1px;
+        width: 8px;
+        border: 1px solid var(--accent, #fff);
+    }
+    .bracket-btn::before { left: -8px; border-right: none; }
+    .bracket-btn::after { right: -8px; border-left: none; }
+    .bracket-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        letter-spacing: 4px;
+    }
+
+    .about-text { max-width: 68ch; color: var(--text-mid, #ccc); font-size: 1rem; }
+    .about-text + .about-text { margin-top: 14px; }
+    .empty-note { color: var(--text-dim, #777); font-size: 0.85rem; }
+</style>
+
+<!-- ── HERO SECTION ── -->
+<section class="hero {% if profile.photo %}has-photo{% endif %}" id="home">
+    {% if profile.photo %}
+    <div class="hero-bg">
+        <img src="{{ profile.photo.url }}" alt="{{ profile.name }}">
+    </div>
+    {% endif %}
+
+    <div class="hero-inner">
+        {% if not profile.photo %}
         <div class="profile-photo-wrap">
-            <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="profile-photo">
             <div class="profile-photo-ring"></div>
         </div>
         {% endif %}
-        <div class="eyebrow">Available for work</div>
-        <h1>{{ profile.name }}</h1>
+
+        <span class="eyebrow">{{ profile.name|upper }}'S PORTFOLIO</span>
+        <h1>{{ profile.name|upper }}</h1>
         <h3>{{ profile.title }}</h3>
-        <p class="bio">{{ profile.bio }}</p>
+        <p class="bio">{{ profile.bio|truncatewords:32 }}</p>
+
         <div class="social-links">
-            {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank">GitHub</a>{% endif %}
-            {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn</a>{% endif %}
-            {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank">Facebook</a>{% endif %}
+            {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+            {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+            {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+            {% if profile.email %}<a href="mailto:{{ profile.email }}">Email</a>{% endif %}
         </div>
-        {% if profile.cv %}
+
         <div class="cv-buttons">
-            <a href="{{ profile.cv.url }}" target="_blank" class="cv-btn">📄 View CV</a>
-            <a href="{{ profile.cv.url }}" download class="cv-btn cv-btn-outline">⬇ Download CV</a>
-        </div>
-        {% endif %}
-    </div>
-    <div class="scroll-cue">↓ Scroll</div>
-</section>
-
-<div class="glass-divider"></div>
-
-<section class="section fade-section" id="experience">
-    <div class="container">
-        <span class="section-tag">Career</span>
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline">
-            {% for exp in experiences %}
-            <div class="timeline-item">
-                <h3>{{ exp.role }}</h3>
-                <p class="org">{{ exp.organization }} &middot; {{ exp.start_date }} — {{ exp.end_date|default:"Present" }}</p>
-                <p>{{ exp.description }}</p>
-            </div>
-            {% empty %}
-            <p style="color:var(--text-dim)">No experience added yet.</p>
-            {% endfor %}
-        </div>
-
-        <p class="subhead">Education</p>
-        <div class="timeline">
-            {% for edu in educations %}
-            <div class="timeline-item">
-                <h3>{{ edu.degree }}</h3>
-                <p class="org">{{ edu.institution }} &middot; {{ edu.year }}</p>
-            </div>
-            {% empty %}
-            <p style="color:var(--text-dim)">No education added yet.</p>
-            {% endfor %}
-        </div>
-
-        <p class="subhead">Certificates</p>
-        <div class="cert-grid">
-            {% for cert in certificates %}
-            <div class="cert-card">
-                <div class="cert-icon">🏅</div>
-                <div class="cert-info">
-                    <h3>{{ cert.title }}</h3>
-                    <p class="org">{{ cert.issuer }}{% if cert.level %} &middot; {{ cert.level }}{% endif %}{% if cert.year %} &middot; {{ cert.year }}{% endif %}</p>
-                </div>
-                {% if cert.certificate_file %}
-                <div class="cert-actions">
-                    <a href="{{ cert.certificate_file.url }}" target="_blank">View</a>
-                    <a href="{{ cert.certificate_file.url }}" download>Download</a>
-                </div>
-                {% endif %}
-            </div>
-            {% empty %}
-            <p style="color:var(--text-dim)">No certificates added yet.</p>
-            {% endfor %}
+            <a href="#projects" class="bracket-btn">View Work</a>
+            {% if profile.cv %}
+            <a href="{{ profile.cv.url }}" class="cv-btn cv-btn-outline" target="_blank" rel="noopener">Download CV</a>
+            {% endif %}
         </div>
     </div>
+
+    <div class="scroll-cue">Scroll ↓</div>
 </section>
 
-<div class="glass-divider"></div>
+<div class="container">
 
-<section class="section fade-section" id="projects">
-    <div class="container">
-        <span class="section-tag">Portfolio</span>
-        <h2 class="section-title">Selected Work</h2>
+    <!-- ── ABOUT ── -->
+    <section class="section fade-section" id="about">
+        <span class="section-tag">Introduction</span>
+        <h2 class="section-title">About Me</h2>
+        <p class="about-text">{{ profile.bio }}</p>
+    </section>
+
+    <div class="glass-divider"></div>
+
+    <!-- ── EXPERIENCE & EDUCATION ── -->
+    <section class="section fade-section" id="experience">
+        <span class="section-tag">Background</span>
+        <h2 class="section-title">Experience &amp; Education</h2>
+
+        <div class="subhead">Experience</div>
+        {% for exp in experiences %}
+        <div class="timeline-item">
+            <h3>{{ exp.role }}</h3>
+            <div class="org">{{ exp.organization }} · {{ exp.start_date }} — {{ exp.end_date|default:"Present" }}</div>
+            {% if exp.description %}<p>{{ exp.description }}</p>{% endif %}
+        </div>
+        {% empty %}
+        <p class="empty-note">No experience added yet.</p>
+        {% endfor %}
+
+        <div class="subhead" style="margin-top: 24px;">Education</div>
+        {% for edu in educations %}
+        <div class="timeline-item">
+            <h3>{{ edu.degree }}</h3>
+            <div class="org">{{ edu.institution }} · {{ edu.year }}</div>
+        </div>
+        {% empty %}
+        <p class="empty-note">No education added yet.</p>
+        {% endfor %}
+    </section>
+
+    <div class="glass-divider"></div>
+
+    <!-- ── PROJECTS ── -->
+    <section class="section fade-section" id="projects">
+        <span class="section-tag">Selected Work</span>
+        <h2 class="section-title">Projects</h2>
+
         <div class="grid">
             {% for project in projects %}
             <div class="card">
                 {% if project.image %}
                 <div class="card-img-wrap">
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="card-img">
+                    <img class="card-img" src="{{ project.image.url }}" alt="{{ project.title }}">
                 </div>
                 {% endif %}
                 <div class="card-body">
                     <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:22 }}</p>
+                    <p>{{ project.description|truncatewords:24 }}</p>
+                    {% if project.tech_used %}
                     <div class="tech-tags">
-                        {% for tech in project.tech_used.split %}
-                        <span class="tech-tag">{{ tech|cut:"," }}</span>
-                        {% endfor %}
+                        <span class="tech-tag">{{ project.tech_used }}</span>
                     </div>
+                    {% endif %}
                     <div class="card-links">
-                        {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank">GitHub →</a>{% endif %}
-                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live →</a>{% endif %}
+                        {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank" rel="noopener">Code</a>{% endif %}
+                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank" rel="noopener">Live Demo</a>{% endif %}
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p style="color:var(--text-dim)">No projects added yet.</p>
+            <p class="empty-note">No projects added yet.</p>
             {% endfor %}
         </div>
-    </div>
-</section>
+    </section>
 
-<div class="glass-divider"></div>
+    <div class="glass-divider"></div>
 
-<section class="section fade-section" id="skills">
-    <div class="container">
+    <!-- ── SKILLS ── -->
+    <section class="section fade-section" id="skills">
         <span class="section-tag">Toolbox</span>
         <h2 class="section-title">Skills</h2>
-        <div class="skills-list">
-            {% for skill in skills %}
+
+        {% regroup skills by get_category_display as skill_categories %}
+        {% for category in skill_categories %}
+        <div class="subhead">{{ category.grouper }}</div>
+        <div class="skills-list" style="margin-bottom: 24px;">
+            {% for skill in category.list %}
             <span class="skill-badge">{{ skill.name }}</span>
-            {% empty %}
-            <p style="color:var(--text-dim)">No skills added yet.</p>
             {% endfor %}
         </div>
-    </div>
-</section>
+        {% empty %}
+        <p class="empty-note">No skills added yet.</p>
+        {% endfor %}
+    </section>
 
-<div class="glass-divider"></div>
+    {% if certificates %}
+    <div class="glass-divider"></div>
 
-<section class="section fade-section" id="contact">
-    <div class="container">
-        <div class="contact-box">
-            <span class="section-tag">Get in touch</span>
-            <h2 class="section-title">Let's Work Together</h2>
-            <p class="contact-sub">Open for freelance, collaboration, or full-time opportunities.</p>
-            <a href="mailto:{{ profile.email }}" class="email-link">{{ profile.email }}</a>
-            <a href="mailto:{{ profile.linkdine }}" class="email-link">{{ profile.linkdine }}</a>
+    <!-- ── CERTIFICATES ── -->
+    <section class="section fade-section" id="certificates">
+        <span class="section-tag">Qualifications</span>
+        <h2 class="section-title">Certifications</h2>
+
+        <div class="grid">
+            {% for cert in certificates %}
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{ cert.title }}</h3>
+                    <p><strong>Issuer:</strong> {{ cert.issuer }}</p>
+                    {% if cert.level %}<p><strong>Level:</strong> {{ cert.level }}</p>{% endif %}
+                    {% if cert.year %}<p><small>{{ cert.year }}</small></p>{% endif %}
+                    {% if cert.certificate_file %}
+                    <div class="card-links">
+                        <a href="{{ cert.certificate_file.url }}" target="_blank" rel="noopener">View Certificate</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
-    </div>
-</section>
+    </section>
+    {% endif %}
+
+    <div class="glass-divider"></div>
+
+    <!-- ── CONTACT ── -->
+    <section class="section fade-section" id="contact">
+        <div class="contact-box">
+            <span class="section-tag">Get In Touch</span>
+            <h2 class="section-title">Let's Talk</h2>
+
+            <div class="contact-links">
+                {% if profile.email %}
+                <a href="mailto:{{ profile.email }}" class="contact-card">
+                    <div class="contact-logo gmail-logo">✉</div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">Email</span>
+                        <span class="contact-card-value">{{ profile.email }}</span>
+                    </div>
+                    <span class="contact-arrow">→</span>
+                </a>
+                {% endif %}
+                {% if profile.linkedin_url %}
+                <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="contact-card">
+                    <div class="contact-logo linkedin-logo">in</div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">LinkedIn</span>
+                        <span class="contact-card-value">Connect with me</span>
+                    </div>
+                    <span class="contact-arrow">→</span>
+                </a>
+                {% endif %}
+                {% if profile.github_url %}
+                <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="contact-card">
+                    <div class="contact-logo linkedin-logo">GH</div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">GitHub</span>
+                        <span class="contact-card-value">View Repositories</span>
+                    </div>
+                    <span class="contact-arrow">→</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+</div>
 
 {% endblock %}

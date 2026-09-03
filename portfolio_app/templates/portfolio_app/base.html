@@ -29,14 +29,12 @@
             overflow-x: hidden;
         }
 
-        /* Ambient background orbs */
+        /* Ambient orbs */
         body::before {
             content: '';
             position: fixed;
-            top: -30vh;
-            left: -20vw;
-            width: 80vw;
-            height: 80vh;
+            top: -30vh; left: -20vw;
+            width: 80vw; height: 80vh;
             background: radial-gradient(circle, rgba(125,211,252,0.07) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
@@ -45,10 +43,8 @@
         body::after {
             content: '';
             position: fixed;
-            bottom: -30vh;
-            right: -20vw;
-            width: 80vw;
-            height: 80vh;
+            bottom: -30vh; right: -20vw;
+            width: 80vw; height: 80vh;
             background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
@@ -72,6 +68,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
+            transition: background 0.3s;
         }
 
         .nav-content {
@@ -115,20 +112,6 @@
         .nav-links a:hover { color: var(--text); }
         .nav-links a:hover::after { width: 100%; }
 
-        /* ── GLASS CARD ── */
-        .glass {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-        }
-
-        .glass:hover {
-            background: var(--glass-hover);
-            border-color: rgba(125, 211, 252, 0.15);
-        }
-
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
@@ -140,10 +123,7 @@
             position: relative;
         }
 
-        .hero-inner {
-            position: relative;
-            z-index: 1;
-        }
+        .hero-inner { position: relative; z-index: 1; }
 
         .profile-photo-wrap {
             position: relative;
@@ -228,7 +208,6 @@
             border-radius: 30px;
             font-size: 0.82rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
             background: var(--glass);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
@@ -322,13 +301,12 @@
         }
 
         .subhead {
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             font-weight: 700;
             margin: 56px 0 28px;
             color: var(--text-mid);
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.8rem;
         }
 
         /* ── TIMELINE ── */
@@ -348,11 +326,7 @@
             transform: translateX(6px);
         }
 
-        .timeline-item h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+        .timeline-item h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
 
         .timeline-item .org {
             color: var(--accent);
@@ -408,16 +382,10 @@
             background: linear-gradient(to top, rgba(5,5,8,0.8), transparent 60%);
         }
 
-        .card-img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
         .card:hover .card-img { transform: scale(1.08); }
 
         .card-body { padding: 24px; }
-
         .card-body h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
         .card-body p { color: var(--text-mid); font-size: 0.9rem; margin-bottom: 14px; }
 
@@ -447,10 +415,7 @@
             transition: all 0.3s;
         }
 
-        .card-links a:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
+        .card-links a:hover { color: var(--accent); border-color: var(--accent); }
 
         /* ── SKILLS ── */
         .skills-list { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -495,10 +460,9 @@
         }
 
         .cert-icon {
-            font-size: 2rem;
+            font-size: 1.6rem;
             flex-shrink: 0;
-            width: 52px;
-            height: 52px;
+            width: 52px; height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -508,9 +472,7 @@
         }
 
         .cert-info { flex: 1; }
-
         .cert-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
-
         .cert-info .org {
             color: var(--text-dim);
             font-size: 0.75rem;
@@ -529,13 +491,9 @@
             padding: 6px 14px;
             border-radius: 20px;
             transition: all 0.3s;
-            backdrop-filter: blur(6px);
         }
 
-        .cert-actions a:hover {
-            background: var(--accent);
-            color: #050508;
-        }
+        .cert-actions a:hover { background: var(--accent); color: #050508; }
 
         /* ── CONTACT ── */
         .contact-box {
@@ -552,11 +510,9 @@
         .contact-box::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: 50%;
+            top: -50%; left: 50%;
             transform: translateX(-50%);
-            width: 400px;
-            height: 300px;
+            width: 400px; height: 300px;
             background: radial-gradient(circle, rgba(125,211,252,0.08), transparent 70%);
             pointer-events: none;
         }
@@ -566,29 +522,107 @@
         .contact-sub {
             color: var(--text-mid);
             font-size: 0.95rem;
-            margin-bottom: 28px;
+            margin-bottom: 0;
         }
 
-        .email-link {
-            display: inline-block;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--text);
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 500px;
+            margin: 36px auto 0;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 22px;
+            border-radius: 16px;
             text-decoration: none;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transition: opacity 0.3s;
+            color: var(--text);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            backdrop-filter: blur(16px);
+            transition: all 0.35s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .email-link:hover { opacity: 0.8; }
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(125,211,252,0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+
+        .contact-card:hover::before { opacity: 1; }
+
+        .contact-card:hover {
+            border-color: rgba(125,211,252,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .contact-logo {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .gmail-logo {
+            background: rgba(234,67,53,0.12);
+            border: 1px solid rgba(234,67,53,0.25);
+        }
+
+        .linkedin-logo {
+            background: rgba(0,119,181,0.12);
+            border: 1px solid rgba(0,119,181,0.25);
+        }
+
+        .contact-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            text-align: left;
+        }
+
+        .contact-card-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .contact-card-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .contact-arrow {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .contact-card:hover .contact-arrow {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
 
         /* ── DIVIDER ── */
         .glass-divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
-            margin: 0;
         }
 
         /* ── FOOTER ── */
@@ -612,12 +646,22 @@
         .fade-section.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            .nav-links a { margin-left: 14px; font-size: 0.65rem; }
+        @media (max-width: 768px) {
+            .nav-links a { margin-left: 16px; font-size: 0.68rem; letter-spacing: 1px; }
             .section { padding: 80px 0; }
             .hero h1 { letter-spacing: -1px; }
             .cert-card { flex-wrap: wrap; }
             .cert-actions { width: 100%; }
+            .contact-card-value { font-size: 0.82rem; }
+            .contact-box { padding: 50px 24px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 20px; }
+            .nav-links a { margin-left: 10px; font-size: 0.6rem; }
+            .cv-buttons { flex-direction: column; align-items: center; }
+            .social-links { gap: 8px; }
         }
     </style>
 </head>
@@ -639,6 +683,7 @@
     {% block content %}{% endblock %}
 
     <div class="glass-divider"></div>
+
     <footer class="footer">
         <div class="container">
             <p>{% now "Y" %} &copy; {{ profile.name }} — Built with Django</p>
@@ -666,14 +711,12 @@
 
         document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
 
-        // Navbar scroll style
+        // Navbar scroll opacity
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('.navbar');
-            if (window.scrollY > 60) {
-                nav.style.background = 'rgba(5, 5, 8, 0.9)';
-            } else {
-                nav.style.background = 'rgba(5, 5, 8, 0.6)';
-            }
+            nav.style.background = window.scrollY > 60
+                ? 'rgba(5, 5, 8, 0.95)'
+                : 'rgba(5, 5, 8, 0.6)';
         });
     </script>
 </body>

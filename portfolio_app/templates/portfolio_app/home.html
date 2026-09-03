@@ -244,7 +244,13 @@
         <div class="subhead">{{ category.grouper }}</div>
         <div class="skills-list" style="margin-bottom: 24px;">
             {% for skill in category.list %}
-            <span class="skill-badge">{{ skill.name }}</span>
+            <span class="skill-badge">
+                <!-- স্বয়ংক্রিয়ভাবে মডেলের get_icon_class পদ্ধতি থেকে দেবিকন আইকন রেন্ডার করবে -->
+                {% if skill.get_icon_class %}
+                    <i class="{{ skill.get_icon_class }}"></i>
+                {% endif %}
+                {{ skill.name }}
+            </span>
             {% endfor %}
         </div>
         {% empty %}

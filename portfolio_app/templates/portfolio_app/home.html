@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<section class="hero fade-section" id="about">
-    <div class="container hero-content">
+<section class="hero fade-section visible" id="about">
+    <div class="container">
         {% if profile.photo %}
             <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="profile-photo">
         {% endif %}
+        <span class="eyebrow">Portfolio</span>
         <h1>{{ profile.name }}</h1>
         <h3>{{ profile.title }}</h3>
         <p class="bio">{{ profile.bio }}</p>
@@ -16,10 +17,12 @@
             {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank">Facebook</a>{% endif %}
         </div>
     </div>
+    <div class="scroll-cue">Scroll Down</div>
 </section>
 
 <section class="section fade-section" id="experience">
     <div class="container">
+        <span class="section-tag">Career</span>
         <h2 class="section-title">Experience</h2>
         <div class="timeline">
             {% for exp in experiences %}
@@ -29,11 +32,11 @@
                 <p>{{ exp.description }}</p>
             </div>
             {% empty %}
-            <p>No experience added yet.</p>
+            <p style="color: var(--text-dim);">No experience added yet.</p>
             {% endfor %}
         </div>
 
-        <h2 class="section-title">Education</h2>
+        <h3 class="subhead">Education</h3>
         <div class="timeline">
             {% for edu in educations %}
             <div class="timeline-item">
@@ -41,7 +44,22 @@
                 <p class="org">{{ edu.institution }} &middot; {{ edu.year }}</p>
             </div>
             {% empty %}
-            <p>No education added yet.</p>
+            <p style="color: var(--text-dim);">No education added yet.</p>
+            {% endfor %}
+        </div>
+
+        <h3 class="subhead">Certificates</h3>
+        <div class="timeline">
+            {% for cert in certificates %}
+            <div class="timeline-item">
+                <h3>{{ cert.title }}</h3>
+                <p class="org">{{ cert.issuer }} {% if cert.level %}&middot; {{ cert.level }}{% endif %} {% if cert.year %}&middot; {{ cert.year }}{% endif %}</p>
+                {% if cert.certificate_file %}
+                    <a href="{{ cert.certificate_file.url }}" target="_blank">View Certificate →</a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p style="color: var(--text-dim);">No certificates added yet.</p>
             {% endfor %}
         </div>
     </div>
@@ -49,25 +67,31 @@
 
 <section class="section alt-bg fade-section" id="projects">
     <div class="container">
-        <h2 class="section-title">Projects</h2>
+        <span class="section-tag">Portfolio</span>
+        <h2 class="section-title">Selected Work</h2>
         <div class="grid">
             {% for project in projects %}
             <div class="card">
                 {% if project.image %}
+                <div class="card-img-wrap">
                     <img src="{{ project.image.url }}" alt="{{ project.title }}" class="card-img">
+                </div>
                 {% endif %}
                 <div class="card-body">
                     <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:25 }}</p>
-                    <p class="tech">{{ project.tech_used }}</p>
+                    <p>{{ project.description|truncatewords:22 }}</p>
+                    <div class="tech-tags">
+                        {% for tech in project.tech_used|cut:" "|slice:":200" %}{% endfor %}
+                        {% for t in project.tech_used.split %}{% endfor %}
+                    </div>
                     <div class="card-links">
                         {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank">GitHub</a>{% endif %}
-                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live</a>{% endif %}
+                        {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank">Live Site</a>{% endif %}
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p>No projects added yet.</p>
+            <p style="color: var(--text-dim);">No projects added yet.</p>
             {% endfor %}
         </div>
     </div>
@@ -75,12 +99,13 @@
 
 <section class="section fade-section" id="skills">
     <div class="container">
+        <span class="section-tag">Toolbox</span>
         <h2 class="section-title">Skills</h2>
         <div class="skills-list">
             {% for skill in skills %}
                 <span class="skill-badge">{{ skill.name }}</span>
             {% empty %}
-                <p>No skills added yet.</p>
+                <p style="color: var(--text-dim);">No skills added yet.</p>
             {% endfor %}
         </div>
     </div>
@@ -88,8 +113,11 @@
 
 <section class="section alt-bg fade-section" id="contact">
     <div class="container">
-        <h2 class="section-title">Contact</h2>
-        <p>Email: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+        <div class="contact-box">
+            <span class="section-tag">Get in touch</span>
+            <h2 class="section-title" style="margin-bottom: 0;">Let's build something great</h2>
+            <a href="mailto:{{ profile.email }}" class="email-link">{{ profile.email }}</a>
+        </div>
     </div>
 </section>
 

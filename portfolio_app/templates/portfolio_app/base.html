@@ -60,6 +60,7 @@
             padding: 0 32px;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
         /* ── NAVBAR ── */
@@ -116,24 +117,28 @@
         .nav-links a:hover { color: var(--text); }
         .nav-links a:hover::after { width: 100%; }
 
-        /* ── HERO (UPDATED FOR LEFT ALIGNMENT & FACE VISIBILITY) ── */
+        /* ── HERO (FULLY CENTERED LAYOUT) ── */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            text-align: left;
+            justify-content: center;
             padding: 120px 0 80px;
             position: relative;
-            /* বাম দিকে ডার্ক গ্রাডিয়েন্ট যাতে টেক্সট পড়তে সুবিধা হয় এবং ডান দিকে ছবি থাকবে */
-            background: linear-gradient(90deg, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0.6) 50%, rgba(5,5,8,0.2) 100%), 
-                        url('{% if profile.photo %}{{ profile.photo.url }}{% endif %}') center right / cover no-repeat;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(5,5,8,0.75) 0%, rgba(5,5,8,0.92) 80%), 
+                        url('{% if profile.photo %}{{ profile.photo.url }}{% endif %}') center center / cover no-repeat;
         }
 
         .hero-inner { 
             position: relative; 
             z-index: 1; 
-            max-width: 600px; /* টেক্সট যাতে বাম পাশের অর্ধেক জুড়ে থাকে */
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .eyebrow {
@@ -144,18 +149,21 @@
             color: var(--accent);
             font-weight: 700;
             margin-bottom: 18px;
-            padding: 6px 16px;
+            padding: 6px 20px;
             background: rgba(125,211,252,0.07);
             border: 1px solid rgba(125,211,252,0.15);
             border-radius: 20px;
+            text-align: center;
         }
 
         .hero h1 {
-            font-size: clamp(2.6rem, 6vw, 4.5rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 800;
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
             line-height: 1.05;
             margin-bottom: 16px;
+            text-align: center;
+            width: 100%;
         }
 
         .hero h3 {
@@ -166,27 +174,32 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 24px;
+            text-align: center;
         }
 
         .bio {
-            max-width: 100%;
-            margin: 0 0 36px 0;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 32px auto;
             color: var(--text-mid);
             font-size: 1rem;
+            text-align: center;
         }
 
         .social-links {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
+            align-items: center;
             gap: 12px;
             flex-wrap: wrap;
             margin-bottom: 24px;
+            width: 100%;
         }
 
         .social-links a {
             color: var(--text-mid);
             text-decoration: none;
-            padding: 10px 22px;
+            padding: 8px 22px;
             border-radius: 30px;
             font-size: 0.82rem;
             font-weight: 600;
@@ -203,22 +216,24 @@
             transform: translateY(-3px);
         }
 
-        /* CV Buttons */
+        /* CV & Action Buttons Centered */
         .cv-buttons {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
+            align-items: center;
             gap: 14px;
             flex-wrap: wrap;
-            margin-top: 8px;
+            width: 100%;
         }
 
         .cv-btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 12px 28px;
             border-radius: 30px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s;
@@ -417,7 +432,6 @@
             transition: all 0.3s;
         }
 
-        /* Devicon SVG Styles */
         .skill-badge i {
             font-size: 1.3rem;
             line-height: 1;
@@ -638,14 +652,6 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .hero {
-                background: linear-gradient(180deg, rgba(5,5,8,0.85) 0%, rgba(5,5,8,0.95) 100%), 
-                            url('{% if profile.photo %}{{ profile.photo.url }}{% endif %}') center / cover no-repeat;
-                text-align: center;
-                justify-content: center;
-            }
-            .hero-inner { max-width: 100%; }
-            .social-links, .cv-buttons { justify-content: center; }
             .nav-links a { margin-left: 16px; font-size: 0.68rem; letter-spacing: 1px; }
             .section { padding: 80px 0; }
             .hero h1 { letter-spacing: -1px; }
@@ -659,7 +665,7 @@
         @media (max-width: 480px) {
             .container { padding: 0 20px; }
             .nav-links a { margin-left: 10px; font-size: 0.6rem; }
-            .cv-buttons { flex-direction: column; align-items: center; }
+            .cv-buttons { flex-direction: column; align-items: stretch; }
             .social-links { gap: 8px; }
         }
     </style>

@@ -9,7 +9,7 @@ class Profile(models.Model):
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
-    cv = models.FileField(upload_to='cv/', blank=True, null=True)  # ← এটা যোগ করো
+    cv = models.FileField(upload_to='cv/', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -18,7 +18,7 @@ class Profile(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    image = models.ImageField(upload_to='projects/', blank=True, null=True, help_text="Main Thumbnail Image")
     tech_used = models.CharField(max_length=200, help_text="Comma separated, e.g. Django, Python, Bootstrap")
     github_link = models.URLField(blank=True)
     live_link = models.URLField(blank=True)
@@ -26,7 +26,23 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# 🔹 নতুন যুক্ত করা মডেল: একাধিক ছবি/ভিডিও আপলোড করার জন্য
+class ProjectMedia(models.Model):
+    MEDIA_TYPE_CHOICES = (
+        ('image', 'Image'),
+        ('video', 'Video'),
+    )
     
+    project = models.ForeignKey(Project, related_name='media_files', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='project_media/')
+    media_type = models.CharField(max_length=10, choices=MEDIA_TYPE_CHOICES, default='image')
+    caption = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.project.title} - {self.media_type}"
+
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
@@ -34,7 +50,7 @@ class Skill(models.Model):
         max_length=100, 
         blank=True, 
         null=True, 
-        help_text="খালি রাখলে Name অনুযায়ী অটো আইকন সেট হবে।"
+        help_text="খালি রাখলে Name অনুযায়ী অটো আইকন সেট হবে।"
     )
     
     CATEGORY_CHOICES = [
@@ -54,27 +70,20 @@ class Skill(models.Model):
 
     @property
     def get_icon_class(self):
-        
         if self.icon_class:
             return self.icon_class
         
         name_lower = self.name.lower().strip()
         
-        # ছবিতে থাকা প্রতিটি আইটেমের জন্য Devicon ক্লাসের লিস্ট
         mapping = {
-            # Framework
             'django': 'devicon-django-plain colored',
-            
-            # Language
             'css': 'devicon-css3-plain colored',
             'html': 'devicon-html5-plain colored',
             'python': 'devicon-python-plain colored',
             'sql': 'devicon-sqldeveloper-plain colored',
-            
-            # Tool
             'celery / redis': 'devicon-redis-plain colored',
             'redis': 'devicon-redis-plain colored',
-            'cloudinary': 'devicon-canva-original colored', # Cloudinary এর লোগো না থাকলে এরুপ ব্যবহার করা যায়
+            'cloudinary': 'devicon-canva-original colored',
             'git & github': 'devicon-github-original colored',
             'git': 'devicon-git-plain colored',
             'github': 'devicon-github-original colored',
@@ -83,12 +92,9 @@ class Skill(models.Model):
             'render': 'devicon-express-original colored',
             'sqlite': 'devicon-sqlite-plain colored',
             'whitenoise': 'devicon-django-plain colored',
-            
-            # Other
             'database design': 'devicon-postgresql-plain colored',
             'graphic design (freelancing)': 'devicon-figma-plain colored',
         }
-        
         
         return mapping.get(name_lower, f"devicon-{name_lower.replace(' ', '')}-plain colored")
 
@@ -136,7 +142,6 @@ class Certificate(models.Model):
         return self.title
 
 
-
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -146,6 +151,7 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name} - {self.email}"
+
 
 class Analytics(models.Model):
     projects_built = models.PositiveIntegerField(default=0)

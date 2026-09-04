@@ -1,14 +1,27 @@
 from django.contrib import admin
-from .models import *
+from .models import (
+    Profile, Project, ProjectMedia, Skill, Experience, 
+    Education, Certificate, ContactMessage, Analytics
+)
 
+# --- INLINE MEDIA FOR PROJECTS ---
+class ProjectMediaInline(admin.TabularInline):
+    model = ProjectMedia
+    extra = 1
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    inlines = [ProjectMediaInline]
+    list_display = ('title', 'tech_used', 'created_at')
+
+# --- BASIC MODELS REGISTRATION ---
 admin.site.register(Profile)
-admin.site.register(Project)
 admin.site.register(Skill)
 admin.site.register(Experience)
 admin.site.register(Education)
 admin.site.register(Certificate)
 
-# --- NEW MODELS REGISTRATION ---
+# --- ADVANCED MODELS REGISTRATION ---
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'created_at')

@@ -3,9 +3,26 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Interactive API Documentation-এর জন্য drf_spectacular ইম্পোর্ট করা হলো
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('portfolio_app.urls')),
+
+    # ── Interactive API Playground / Documentation Endpoints ──
+    # OpenAPI Schema
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    
+    # Swagger UI (Interactive API Playground)
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    
+    # Redoc UI (Clean, modern API Documentation)
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if settings.DEBUG:

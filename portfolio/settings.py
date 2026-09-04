@@ -114,23 +114,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# Email
-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
-
+# Email Configuration (EMAIL_BACKEND বাদ দিয়ে শুধুমাত্র MAILERS রাখা হয়েছে)
 MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
 
-
-# Django REST Framework Settings
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
+DEFAULT_FROM_EMAIL = 'noreply@portfolio.com'
+NOTIFY_EMAIL = 'your_email@gmail.com'  # এখানে আপনার আসল ইমেইল দিন
 
 
-# Rate Limiting Configuration for DRF
+# Django REST Framework & Throttling Configuration
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_THROTTLE_CLASSES': [
@@ -138,20 +133,14 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/day',       # অনামী ইউজার দিনে সর্বোচ্চ ৫টি বার্তা পাঠাতে পারবে
-        'contact': '3/hour',   # কন্টাক্ট এপিআই-তে প্রতি ঘণ্টায় ৩টি রিকোয়েস্ট
+        'anon': '5/day',
+        'contact': '3/hour',
         'user': '100/day'
     }
 }
 
-# Realtime Email Notification (Console backend for testing)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@portfolio.com'
-NOTIFY_EMAIL = 'your_email@gmail.com'  # যেখানে মেসেজ নোটিফিকেশন যাবে
 
-
-
-# Interactive API Playground / Documentation Specification Settings
+# Interactive API Playground / Documentation Settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Portfolio API Documentation',
     'DESCRIPTION': 'Interactive API Playground and endpoints documentation for Portfolio application.',

@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -7,13 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mil8_pmckzjr5vtm_ia+cp@ha^p-$6dco*@ts%uuzo274(jk@y'
+# Render Environment Variable থেকে SECRET_KEY নিবে, না পেলে ডিফল্ট কী ব্যবহার করবে
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mil8_pmckzjr5vtm_ia+cp@ha^p-$6dco*@ts%uuzo274(jk@y')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Render-এ প্রডাকশনের সময় DEBUG স্বয়ংক্রিয়ভাবে False হবে
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = []
+# Render Host সহ যেকোনো হোস্ট এলাউ করার জন্য
+ALLOWED_HOSTS = ['*']
+
+# Render-এর CSRF Protection Fix
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com'
+]
 
 
 # Application definition
@@ -36,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise Middleware for Static Files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -109,12 +117,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# Email Configuration (EMAIL_BACKEND বাদ দিয়ে শুধুমাত্র MAILERS রাখা হয়েছে)
+# Email Configuration
 MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
@@ -122,7 +133,7 @@ MAILERS = {
 }
 
 DEFAULT_FROM_EMAIL = 'noreply@portfolio.com'
-NOTIFY_EMAIL = 'your_email@gmail.com'  # এখানে আপনার আসল ইমেইল দিন
+NOTIFY_EMAIL = 'your_email@gmail.com'
 
 
 # Django REST Framework & Throttling Configuration

@@ -1,22 +1,23 @@
+from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
-# Router তৈরি করে API ViewSet গুলো রেজিস্টার করা
-router = DefaultRouter()
-router.register(r'profiles', views.ProfileViewSet)
-router.register(r'projects', views.ProjectViewSet)
-router.register(r'skills', views.SkillViewSet)
-router.register(r'experiences', views.ExperienceViewSet)
-router.register(r'educations', views.EducationViewSet)
-router.register(r'certificates', views.CertificateViewSet)
-router.register(r'contact', views.ContactMessageViewSet, basename='contact')
-router.register(r'analytics', views.AnalyticsViewSet, basename='analytics')
+# Interactive API Documentation
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
 
 urlpatterns = [
-    # Frontend Website URL
-    path('', views.home, name='home'),
+    path('admin/', admin.site.urls),
+    path('', include('portfolio_app.urls')),
 
-    # API Endpoints
-    path('api/v1/', include(router.urls)),
+    # ── Interactive API Documentation Endpoints ──
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

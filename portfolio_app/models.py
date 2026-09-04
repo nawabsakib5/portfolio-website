@@ -28,11 +28,6 @@ class Project(models.Model):
         return self.title
     
 
-
-
-
-from django.db import models
-
 class Skill(models.Model):
     name = models.CharField(max_length=100)
     icon_class = models.CharField(
@@ -141,3 +136,26 @@ class Certificate(models.Model):
         return self.title
 
 
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} - {self.email}"
+
+class Analytics(models.Model):
+    projects_built = models.PositiveIntegerField(default=0)
+    apis_designed = models.PositiveIntegerField(default=0)
+    uptime_percentage = models.FloatField(default=99.9)
+    git_commits = models.PositiveIntegerField(default=0)
+    cv_downloads = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Analytics"
+
+    def __str__(self):
+        return "Portfolio Analytics Stats"

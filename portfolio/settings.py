@@ -130,6 +130,27 @@ REST_FRAMEWORK = {
 }
 
 
+# Rate Limiting Configuration for DRF
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/day',       # অনামী ইউজার দিনে সর্বোচ্চ ৫টি বার্তা পাঠাতে পারবে
+        'contact': '3/hour',   # কন্টাক্ট এপিআই-তে প্রতি ঘণ্টায় ৩টি রিকোয়েস্ট
+        'user': '100/day'
+    }
+}
+
+# Realtime Email Notification (Console backend for testing)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@portfolio.com'
+NOTIFY_EMAIL = 'your_email@gmail.com'  # যেখানে মেসেজ নোটিফিকেশন যাবে
+
+
+
 # Interactive API Playground / Documentation Specification Settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Portfolio API Documentation',

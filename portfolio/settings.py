@@ -31,7 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage', # staticfiles-এর আগে রাখতে হবে
     'django.contrib.staticfiles',
+    'cloudinary',
     
     # Third-party Apps
     'rest_framework',
@@ -56,8 +58,8 @@ ROOT_URLCONF = 'portfolio.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Templates ডিরেক্টরি নিশ্চিত করতে
+        'BACKEND': 'django.template.backends.django.DjangoTemplates', 
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,14 +122,21 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# WhiteNoise Configuration (Django 4.2+ modern syntax)
+# Cloudinary & WhiteNoise Storage Settings (Django 4.2+ / 5.0+ Standard Format)
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
+}
+
+# Cloudinary Credentials Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'dxk8k2qkg'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '363587151294176'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'r69rvAmZcxKS8L3I0C_doJPur8w'),
 }
 
 MEDIA_URL = '/media/'
@@ -137,7 +146,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@portfolio.com'
-NOTIFY_EMAIL = 'your_email@gmail.com'
+NOTIFY_EMAIL = 'nawabsakib5@gmail.com'
 
 
 # Django REST Framework & Throttling Configuration

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
+    'cloudinary_storage', # staticfiles-এর আগে রাখতে হবে
     'django.contrib.staticfiles',
     'cloudinary',
     'rest_framework',
@@ -118,19 +118,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Cloudinary & WhiteNoise Storage Settings (Django 4.2+ / 5.0+ Standard Format)
-# Static & Media Storage Configuration
+# Cloudinary & WhiteNoise Storage Settings
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# django-cloudinary-storage প্যাকেজের সামঞ্জস্যতার জন্য
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# django-cloudinary-storage ও WhiteNoise-এর সামঞ্জস্যতার জন্য
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
 
 # Cloudinary Credentials Configuration
 CLOUDINARY_STORAGE = {

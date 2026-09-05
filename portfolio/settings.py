@@ -20,9 +20,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'cloudinary_storage',
     'rest_framework',
     'drf_spectacular',
     'portfolio_app',
@@ -62,7 +62,6 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 if DATABASE_URL:
-    # Render + Supabase PostgreSQL
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
@@ -70,7 +69,6 @@ if DATABASE_URL:
         )
     }
 else:
-    # Local SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -95,6 +93,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 WHITENOISE_MANIFEST_STRICT = False
+
+# WhiteNoise দিয়ে static files serve করবে
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 STORAGES = {
     "default": {

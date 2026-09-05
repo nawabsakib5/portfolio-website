@@ -1,1 +1,275 @@
-[{"model": "portfolio_app.profile", "pk": 1, "fields": {"name": "Mohammad Sakib Howlader", "title": "Backend Developer", "bio": "I am a passionate Backend Developer dedicated to building scalable, robust, and high-performance web applications. Specializing in designing clean RESTful APIs, database architecture, and efficient server-side logic, I enjoy turning complex problem statements into seamless digital solutions. I am constantly exploring modern tech stacks and best development practices to craft reliable backend systems that power great user experiences.", "photo": "profile/20260321_222445.jpg", "email": "nawabsakib5@gmail.com", "github_url": "https://github.com/nawabsakib5", "linkedin_url": "https://www.linkedin.com/in/nawabsakib/", "facebook_url": "https://www.facebook.com/nawabsakib58/", "cv": "cv/Md.Sakib_Howlader.pdf"}}, {"model": "portfolio_app.project", "pk": 1, "fields": {"title": "Ecommerce", "description": "Cado Fashion (repo: Ecommerce) is a full-stack fashion e-commerce platform built with Python & Django � originally started as Puddle, a second-hand marketplace prototype, and iteratively evolved into a full retail storefront for verified sellers across Bangladesh. Customers can browse curated categories (Men's, Baby items, Children's Drop Shoulders, Clothing, Adults Drop Shoulders), search products, add items to a cart or wishlist, leave reviews, message sellers in real time, and sellers get their own dashboard with Chart.js-powered analytics.", "image": "", "tech_used": "Django, Python, Bootstrap", "github_link": "https://github.com/nawabsakib5/Ecommerce", "live_link": "", "created_at": "2026-09-02T20:59:10.537Z"}}, {"model": "portfolio_app.project", "pk": 2, "fields": {"title": "Social Media Manager", "description": "Social Media Manager is a Django-powered dashboard that centralizes social media operations � connecting brand accounts (Facebook Pages, LinkedIn, and more), scheduling and auto-publishing posts, managing media, and replying to messages from a single unified inbox. Built with Celery + Redis for reliable background task scheduling, it's designed for freelancers, agencies, and small brands who juggle multiple platforms daily.", "image": "", "tech_used": "Django, Python, Bootstrap,Batchfile", "github_link": "https://github.com/nawabsakib5/Social-Media-Manager", "live_link": "", "created_at": "2026-09-03T19:34:46.606Z"}}, {"model": "portfolio_app.skill", "pk": 1, "fields": {"name": "Python", "icon_class": "devicon-python-plain colored", "category": "language"}}, {"model": "portfolio_app.skill", "pk": 2, "fields": {"name": "SQL", "icon_class": "devicon-azuresqldatabase-plain colored", "category": "language"}}, {"model": "portfolio_app.skill", "pk": 3, "fields": {"name": "HTML", "icon_class": "devicon-html5-plain colored", "category": "language"}}, {"model": "portfolio_app.skill", "pk": 4, "fields": {"name": "Django", "icon_class": "devicon-django-plain colored", "category": "framework"}}, {"model": "portfolio_app.skill", "pk": 5, "fields": {"name": "Git & GitHub", "icon_class": "devicon-github-original colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 6, "fields": {"name": "Render", "icon_class": "devicon-heroku-original colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 7, "fields": {"name": "Cloudinary", "icon_class": "devicon-digitalocean-original colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 8, "fields": {"name": "WhiteNoise", "icon_class": "devicon-django-plain colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 9, "fields": {"name": "Gunicorn", "icon_class": "devicon-python-plain colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 10, "fields": {"name": "Celery / Redis", "icon_class": "devicon-redis-plain colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 11, "fields": {"name": "Database Design", "icon_class": "devicon-postgresql-plain colored", "category": "other"}}, {"model": "portfolio_app.skill", "pk": 12, "fields": {"name": "Graphic Design (Freelancing)", "icon_class": "devicon-photoshop-line colored", "category": "other"}}, {"model": "portfolio_app.skill", "pk": 13, "fields": {"name": "SQLite", "icon_class": "devicon-sqlite-plain colored", "category": "tool"}}, {"model": "portfolio_app.skill", "pk": 14, "fields": {"name": "CSS", "icon_class": "devicon-css3-plain colored", "category": "language"}}, {"model": "portfolio_app.skill", "pk": 15, "fields": {"name": "PostgreSQL", "icon_class": "devicon-postgresql-plain colored", "category": "tool"}}, {"model": "portfolio_app.experience", "pk": 1, "fields": {"role": "Freelance Backend Developer", "organization": "Self-employed", "start_date": "March 2024", "end_date": "Present", "description": "Designed and built full-stack Django applications end-to-end for independent clients and self-initiated products, taking each project from database design through deployment. Delivered a production e-commerce platform with cart, wishlist, review, and seller/buyer role systems backed by a relational database; built a multi-user financial tracking app with audit logging and email notifications; and developed a social media management tool for scheduling and engagement tracking. Worked across the full backend stack � models, views, forms, authentication, and third-party integrations (Cloudinary, AJAX, SMTP) � while managing deployment on Render.", "order": 0}}, {"model": "portfolio_app.education", "pk": 1, "fields": {"degree": "B.Sc. in CSE", "institution": "Habibullah Bahar University College Under National University", "year": "2021 - Present", "order": 0}}, {"model": "portfolio_app.certificate", "pk": 1, "fields": {"title": "Web Application Development with Python", "issuer": "National Skills Development Authority(NSDA)", "level": "Level-4", "year": "2025", "certificate_file": "certificates/Web_Devlopment_Certificate.pdf", "order": 0}}, {"model": "portfolio_app.certificate", "pk": 2, "fields": {"title": "Graphic Design for Freelancing.", "issuer": "National Skills Development Authority(NSDA)", "level": "Level-3", "year": "2025", "certificate_file": "certificates/Graphic_Design_Certificate.pdf", "order": 0}}, {"model": "portfolio_app.certificate", "pk": 3, "fields": {"title": "Russian Geographical Society", "issuer": "Russian House in Dhaka, Bangladesh", "level": "", "year": "2025", "certificate_file": "certificates/Russian_Geographic_Society_Certificates_1.pdf", "order": 0}}]
+[
+{
+  "model": "portfolio_app.profile",
+  "pk": 1,
+  "fields": {
+    "name": "Mohammad Sakib Howlader",
+    "title": "Backend Developer",
+    "bio": "I am a passionate Backend Developer dedicated to building scalable, robust, and high-performance web applications. Specializing in designing clean RESTful APIs, database architecture, and efficient server-side logic, I enjoy turning complex problem statements into seamless digital solutions. I am constantly exploring modern tech stacks and best development practices to craft reliable backend systems that power great user experiences.",
+    "photo": "profile/20260321_222445.jpg",
+    "email": "nawabsakib5@gmail.com",
+    "github_url": "https://github.com/nawabsakib5",
+    "linkedin_url": "https://www.linkedin.com/in/nawabsakib/",
+    "facebook_url": "https://www.facebook.com/nawabsakib58/",
+    "cv": "cv/Md.Sakib_Howlader.pdf"
+  }
+},
+{
+  "model": "portfolio_app.project",
+  "pk": 1,
+  "fields": {
+    "title": "Ecommerce",
+    "description": "Cado Fashion (repo: Ecommerce) is a full-stack fashion e-commerce platform built with Python & Django — originally started as Puddle, a second-hand marketplace prototype, and iteratively evolved into a full retail storefront for verified sellers across Bangladesh. Customers can browse curated categories (Men's, Baby items, Children's Drop Shoulders, Clothing, Adults Drop Shoulders), search products, add items to a cart or wishlist, leave reviews, message sellers in real time, and sellers get their own dashboard with Chart.js-powered analytics.",
+    "image": "",
+    "tech_used": "Django, Python, Bootstrap",
+    "github_link": "https://github.com/nawabsakib5/Ecommerce",
+    "live_link": "",
+    "created_at": "2026-09-02T20:59:10.537Z"
+  }
+},
+{
+  "model": "portfolio_app.project",
+  "pk": 2,
+  "fields": {
+    "title": "Social Media Manager",
+    "description": "Social Media Manager is a Django-powered dashboard that centralizes social media operations — connecting brand accounts (Facebook Pages, LinkedIn, and more), scheduling and auto-publishing posts, managing media, and replying to messages from a single unified inbox. Built with Celery + Redis for reliable background task scheduling, it's designed for freelancers, agencies, and small brands who juggle multiple platforms daily.",
+    "image": "",
+    "tech_used": "Django, Python, Bootstrap,Batchfile",
+    "github_link": "https://github.com/nawabsakib5/Social-Media-Manager",
+    "live_link": "",
+    "created_at": "2026-09-03T19:34:46.606Z"
+  }
+},
+{
+  "model": "portfolio_app.project",
+  "pk": 3,
+  "fields": {
+    "title": "Cash Management Django App",
+    "description": "Cash Management App is a multi-user Django application for tracking shared finances across collaborative projects. Multiple users can join a project, log transactions under organized categories, and keep a fully auditable trail of every change — with email alerts keeping everyone in the loop. Built with a clean, dark-themed UI for comfortable day-to-day use.",
+    "image": "",
+    "tech_used": "Django, Python, HTML",
+    "github_link": "https://github.com/nawabsakib5/Cash-Management-Django-App",
+    "live_link": "",
+    "created_at": "2026-09-04T20:59:44.271Z"
+  }
+},
+{
+  "model": "portfolio_app.project",
+  "pk": 4,
+  "fields": {
+    "title": "Django Authentication System",
+    "description": "Full Django Auth is a robust, secure user authentication system built with Python and Django, following the MVT (Model-View-Template) architecture. It's designed as a production-ready foundation for any web app that needs solid, drop-in user management — registration, login/logout, and full password lifecycle handling.",
+    "image": "",
+    "tech_used": "Django, Python, HTML",
+    "github_link": "https://github.com/nawabsakib5/Full-Django-Auth",
+    "live_link": "",
+    "created_at": "2026-09-04T21:01:29.923Z"
+  }
+},
+{
+  "model": "portfolio_app.project",
+  "pk": 5,
+  "fields": {
+    "title": "Hospital Management SQL DML",
+    "description": "# 🏥 Hospital Management System (HMS) - Database Schema\r\n\r\nA robust, relational database architecture designed to manage core hospital operations, including patient registration, staff management, diagnostic reporting, and billing processes.\r\n\r\n## 🚀 Key Features\r\n\r\n* **Comprehensive Data Model**: Includes 10+ interconnected tables managing everything from employee designations to patient blood groups.\r\n* **Data Integrity**: Uses primary and foreign key constraints to ensure consistent relationships between patients, doctors, and medical records.\r\n* **Operational Tracking**: Implements `IDENTITY` for automated ID generation and `DEFAULT GETDATE()` to track transaction times for reports and invoices.\r\n* **Advanced Reporting**: Features a pre-configured View (`vwPatientsDetails`) that joins multiple tables to provide a \"one-stop\" diagnostic report.\r\n\r\n## 📊 Database Schema\r\n\r\nThe system is organized into several functional areas:\r\n* **HR Management**: `Departments`, `Designations`, and `Employees`.\r\n* **Patient Records**: `Patients` and `BloodGroups`.\r\n* **Clinical Operations**: `Appointments`, `DiagnosticTests`, and `TestReports`.\r\n* **Inventory & Finance**: `Categories`, `Products`, `InventoryTransactions`, and `Invoices`.\r\n\r\n## 🛠️ Technical Details\r\n\r\n* **Language**: T-SQL (Microsoft SQL Server).\r\n* **Optimization**: Tables are normalized to reduce redundancy and ensure efficient querying.\r\n* **Sample Data**: Includes a DML script with 20+ records for each table to simulate a live hospital environment.\r\n\r\n## 🚀 Getting Started\r\n\r\n1.  **Environment**: Ensure you have SQL Server and SSMS (SQL Server Management Studio) installed.\r\n2.  **Schema Setup**: Execute `HospitalManagementDb.sql` to create the database and its structures.\r\n3.  **Data Population**: Execute `Hospital Management System DML.sql` to insert sample patients, doctors, and reports.\r\n4.  **Verification**: Run the following command to view consolidated patient reports:\r\n    ```sql\r\n    SELECT * FROM vwPatientsDetails;\r\n    ```\r\n\r\n---\r\n*Developed by Md. Sakib Howlader (Nawab Sakib)*",
+    "image": "",
+    "tech_used": "SQL",
+    "github_link": "https://github.com/nawabsakib5/Hospital-Management-SQL-DML",
+    "live_link": "",
+    "created_at": "2026-09-04T21:03:08.826Z"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 1,
+  "fields": {
+    "name": "Python",
+    "icon_class": "devicon-python-plain colored",
+    "category": "language"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 2,
+  "fields": {
+    "name": "SQL",
+    "icon_class": "devicon-azuresqldatabase-plain colored",
+    "category": "language"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 3,
+  "fields": {
+    "name": "HTML",
+    "icon_class": "devicon-html5-plain colored",
+    "category": "language"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 4,
+  "fields": {
+    "name": "Django",
+    "icon_class": "devicon-django-plain colored",
+    "category": "framework"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 5,
+  "fields": {
+    "name": "Git & GitHub",
+    "icon_class": "devicon-github-original colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 6,
+  "fields": {
+    "name": "Render",
+    "icon_class": "devicon-heroku-original colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 7,
+  "fields": {
+    "name": "Cloudinary",
+    "icon_class": "devicon-digitalocean-original colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 8,
+  "fields": {
+    "name": "WhiteNoise",
+    "icon_class": "devicon-django-plain colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 9,
+  "fields": {
+    "name": "Gunicorn",
+    "icon_class": "devicon-python-plain colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 10,
+  "fields": {
+    "name": "Celery / Redis",
+    "icon_class": "devicon-redis-plain colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 11,
+  "fields": {
+    "name": "Database Design",
+    "icon_class": "devicon-postgresql-plain colored",
+    "category": "other"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 12,
+  "fields": {
+    "name": "Graphic Design (Freelancing)",
+    "icon_class": "devicon-photoshop-line colored",
+    "category": "other"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 13,
+  "fields": {
+    "name": "SQLite",
+    "icon_class": "devicon-sqlite-plain colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 14,
+  "fields": {
+    "name": "CSS",
+    "icon_class": "devicon-css3-plain colored",
+    "category": "language"
+  }
+},
+{
+  "model": "portfolio_app.skill",
+  "pk": 15,
+  "fields": {
+    "name": "PostgreSQL",
+    "icon_class": "devicon-postgresql-plain colored",
+    "category": "tool"
+  }
+},
+{
+  "model": "portfolio_app.experience",
+  "pk": 1,
+  "fields": {
+    "role": "Freelance Backend Developer",
+    "organization": "Self-employed",
+    "start_date": "March 2024",
+    "end_date": "Present",
+    "description": "Designed and built full-stack Django applications end-to-end for independent clients and self-initiated products, taking each project from database design through deployment. Delivered a production e-commerce platform with cart, wishlist, review, and seller/buyer role systems backed by a relational database; built a multi-user financial tracking app with audit logging and email notifications; and developed a social media management tool for scheduling and engagement tracking. Worked across the full backend stack — models, views, forms, authentication, and third-party integrations (Cloudinary, AJAX, SMTP) — while managing deployment on Render.",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio_app.education",
+  "pk": 1,
+  "fields": {
+    "degree": "B.Sc. in CSE",
+    "institution": "Habibullah Bahar University College Under National University",
+    "year": "2021 - Present",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio_app.certificate",
+  "pk": 1,
+  "fields": {
+    "title": "Web Application Development with Python",
+    "issuer": "National Skills Development Authority(NSDA)",
+    "level": "Level-4",
+    "year": "2025",
+    "certificate_file": "certificates/Web_Devlopment_Certificate.pdf",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio_app.certificate",
+  "pk": 2,
+  "fields": {
+    "title": "Graphic Design for Freelancing.",
+    "issuer": "National Skills Development Authority(NSDA)",
+    "level": "Level-3",
+    "year": "2025",
+    "certificate_file": "certificates/Graphic_Design_Certificate.pdf",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio_app.certificate",
+  "pk": 3,
+  "fields": {
+    "title": "Russian Geographical Society",
+    "issuer": "Russian House in Dhaka, Bangladesh",
+    "level": "",
+    "year": "2025",
+    "certificate_file": "certificates/Russian_Geographic_Society_Certificates_1.pdf",
+    "order": 0
+  }
+}
+]

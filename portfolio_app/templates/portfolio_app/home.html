@@ -227,7 +227,10 @@
 
     <div class="hero-inner">
         <span class="eyebrow">{{ profile.name|upper }}</span>
-        <h1>{{ profile.title|default:profile.name }}</h1>
+        
+        <!-- FIXED LINE HERE -->
+        <h1>{% if profile.title %}{{ profile.title }}{% else %}{{ profile.name }}{% endif %}</h1>
+        
         <p class="bio">{{ profile.bio|truncatewords:28 }}</p>
 
         <div class="social-links" style="margin-bottom: 25px;">

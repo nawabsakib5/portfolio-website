@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (
-    Profile, Project, ProjectMedia, Skill, Experience, 
-    Education, Certificate, ContactMessage, Analytics
+    Profile, Project, ProjectMedia, Skill, Experience,
+    Education, Certificate, ContactMessage, Analytics, VisitorLog
 )
 
 # --- INLINE MEDIA FOR PROJECTS ---
@@ -30,3 +30,11 @@ class ContactMessageAdmin(admin.ModelAdmin):
 @admin.register(Analytics)
 class AnalyticsAdmin(admin.ModelAdmin):
     list_display = ('projects_built', 'apis_designed', 'uptime_percentage', 'git_commits', 'cv_downloads')
+
+# --- VISITOR LOG ---
+@admin.register(VisitorLog)
+class VisitorLogAdmin(admin.ModelAdmin):
+    list_display = ['ip_address', 'page_visited', 'visited_at']
+    list_filter = ['visited_at', 'page_visited']
+    readonly_fields = ['ip_address', 'user_agent', 'page_visited', 'visited_at']
+    ordering = ['-visited_at']

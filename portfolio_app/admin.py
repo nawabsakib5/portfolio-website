@@ -8,6 +8,7 @@ from .models import (
 class ProjectMediaInline(admin.TabularInline):
     model = ProjectMedia
     extra = 1
+    fields = ['media_type', 'file', 'external_url', 'caption', 'order']
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):

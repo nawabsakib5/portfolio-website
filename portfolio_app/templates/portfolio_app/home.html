@@ -11,8 +11,8 @@
         position: relative;
         width: 100vw;
         height: 100vh;
-        margin-left: calc(-50vw + 50%); /* edge-to-edge breakout */
-        margin-top: -80px; /* navbar overlap adjusting height if needed */
+        margin-left: calc(-50vw + 50%);
+        margin-top: -80px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -20,7 +20,6 @@
         background-color: #050508;
     }
 
-    /* Background image positioning like the reference layout */
     .hero-bg {
         position: absolute;
         inset: 0;
@@ -31,11 +30,10 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center 25%; /* Image subject focus center-crop */
+        object-position: center 25%;
         filter: grayscale(85%) contrast(110%) brightness(0.4);
     }
 
-    /* Dark vignette and radial gradient overlay */
     .hero-bg::after {
         content: '';
         position: absolute;
@@ -43,7 +41,6 @@
         background: radial-gradient(circle at center, rgba(5,5,8,0.2) 0%, rgba(5,5,8,0.85) 80%, #050508 100%);
     }
 
-    /* Content styling aligned exactly like reference image */
     .hero-inner {
         position: relative;
         z-index: 2;
@@ -90,14 +87,13 @@
         line-height: 1.6;
     }
 
-    /* Exact Bracket CTA Button from the reference design */
     .bracket-btn {
         display: inline-flex;
         align-items: center;
         gap: 12px;
         padding: 16px 36px;
-        border-top: 1px solid rgba(255, 255, 255, 0.8);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        border-top: 1px solid rgba(255,255,255,0.8);
+        border-bottom: 1px solid rgba(255,255,255,0.8);
         color: #ffffff;
         text-decoration: none;
         font-size: 0.78rem;
@@ -112,70 +108,59 @@
     .bracket-btn::after {
         content: '';
         position: absolute;
-        top: -1px; 
+        top: -1px;
         bottom: -1px;
         width: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255,255,255,0.8);
     }
     .bracket-btn::before { left: -10px; border-right: none; }
-    .bracket-btn::after { right: -10px; border-left: none; }
+    .bracket-btn::after  { right: -10px; border-left: none; }
     .bracket-btn:hover {
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(255,255,255,0.12);
         letter-spacing: 5px;
         border-color: #ffffff;
     }
 
-    .about-text { max-width: 68ch; color: var(--text-mid, #ccc); font-size: 1rem; }
-    .about-text + .about-text { margin-top: 14px; }
-    .empty-note { color: var(--text-dim, #777); font-size: 0.85rem; }
+    .about-text { max-width: 68ch; color: var(--text-mid,#ccc); font-size:1rem; }
+    .about-text + .about-text { margin-top:14px; }
+    .empty-note { color: var(--text-dim,#777); font-size:0.85rem; }
 
-    /* ── KEY METRICS / STATS SECTION STYLES ── */
+    /* ── METRICS ── */
     .metrics-section {
         padding: 40px 0;
         margin-top: -50px;
         position: relative;
         z-index: 10;
     }
-
     .metrics-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
         gap: 20px;
     }
-
     .metric-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
         backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
         border-radius: 16px;
         padding: 24px 20px;
         text-align: center;
         transition: all 0.3s ease;
     }
-
     .metric-card:hover {
         transform: translateY(-5px);
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-color: rgba(255,255,255,0.25);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-
     .metric-number {
         font-size: 2.2rem;
         font-weight: 800;
-        background: linear-gradient(90deg, #60a5fa, #a78bfa);
+        background: linear-gradient(90deg,#60a5fa,#a78bfa);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         display: inline-block;
     }
-
-    .plus {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #60a5fa;
-    }
-
+    .plus { font-size:1.8rem; font-weight:700; color:#60a5fa; }
     .metric-label {
         color: #94a3b8;
         font-size: 0.85rem;
@@ -185,17 +170,11 @@
         margin-top: 6px;
     }
 
-    /* ── SKILLS FILTER BUTTONS STYLES ── */
-    .skills-filter-btns {
-        margin-bottom: 25px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
+    /* ── SKILLS FILTER ── */
+    .skills-filter-btns { margin-bottom:25px; display:flex; gap:10px; flex-wrap:wrap; }
     .filter-btn {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.15);
         color: #cbd5e1;
         padding: 8px 18px;
         border-radius: 20px;
@@ -204,20 +183,104 @@
         cursor: pointer;
         transition: all 0.3s ease;
     }
-
     .filter-btn:hover, .filter-btn.active {
         background: #60a5fa;
         color: #050508;
         border-color: #60a5fa;
-        box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+        box-shadow: 0 4px 15px rgba(96,165,250,0.3);
+    }
+    .skill-category-group { transition: all 0.4s ease; }
+
+    /* ── PROJECT MEDIA GALLERY ── */
+    .project-media {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .media-item { border-radius: 10px; overflow: hidden; }
+    .media-thumb {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s;
+        border: 1px solid var(--glass-border);
+    }
+    .media-thumb:hover { transform: scale(1.02); }
+    .media-caption {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        margin-top: 6px;
+        text-align: center;
+    }
+    .video-wrap {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    .video-wrap iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border-radius: 10px;
+    }
+    .media-video {
+        width: 100%;
+        border-radius: 10px;
+        max-height: 200px;
+    }
+    .external-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: rgba(125,211,252,0.08);
+        border: 1px solid rgba(125,211,252,0.2);
+        border-radius: 20px;
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .external-link:hover {
+        background: rgba(125,211,252,0.15);
+        transform: translateY(-2px);
     }
 
-    .skill-category-group {
-        transition: all 0.4s ease;
+    /* ── LIGHTBOX ── */
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.92);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 10px;
+        object-fit: contain;
+    }
+    .lightbox-close {
+        position: absolute;
+        top: 20px; right: 30px;
+        font-size: 2rem;
+        color: #fff;
+        cursor: pointer;
+        background: none;
+        border: none;
     }
 </style>
 
-<!-- ── HERO SECTION ── -->
+<!-- ── HERO ── -->
 <section class="hero" id="home">
     {% if profile.photo %}
     <div class="hero-bg">
@@ -227,34 +290,20 @@
 
     <div class="hero-inner">
         <span class="eyebrow">{{ profile.name|upper }}</span>
-        
-        <!-- FIXED LINE HERE -->
         <h1>{% if profile.title %}{{ profile.title }}{% else %}{{ profile.name }}{% endif %}</h1>
-        
         <p class="bio">{{ profile.bio|truncatewords:28 }}</p>
 
-        <div class="social-links" style="margin-bottom: 25px;">
-            {% if profile.github_url %}
-            <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
-            {% endif %}
-
-            {% if profile.linkedin_url %}
-            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
-            {% endif %}
-
-            {% if profile.facebook_url %}
-            <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>
-            {% endif %}
-
-            {% if profile.email %}
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ profile.email }}" target="_blank" rel="noopener">Email</a>
-            {% endif %}
+        <div class="social-links" style="margin-bottom:25px;">
+            {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+            {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+            {% if profile.facebook_url %}<a href="{{ profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+            {% if profile.email %}<a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ profile.email }}" target="_blank" rel="noopener">Email</a>{% endif %}
         </div>
 
         <div class="cv-buttons">
             <a href="#projects" class="bracket-btn">Live Demos</a>
             {% if profile.cv %}
-            <a href="{{ profile.cv.url }}" class="cv-btn cv-btn-outline" target="_blank" rel="noopener" style="margin-left: 15px;">Download CV</a>
+            <a href="{{ profile.cv }}" class="cv-btn cv-btn-outline" target="_blank" rel="noopener" style="margin-left:15px;">Download CV</a>
             {% endif %}
         </div>
     </div>
@@ -262,7 +311,7 @@
 
 <div class="container">
 
-    <!-- ── KEY METRICS / STATS SECTION ── -->
+    <!-- ── METRICS ── -->
     <section class="metrics-section">
         <div class="metrics-grid">
             <div class="metric-card">
@@ -275,7 +324,7 @@
             </div>
             <div class="metric-card">
                 <span class="metric-number" id="uptime-count" data-target="99.9">0</span><span class="plus">%</span>
-                <p class="metric-label">Uptime & Reliability</p>
+                <p class="metric-label">Uptime &amp; Reliability</p>
             </div>
             <div class="metric-card">
                 <span class="metric-number" id="commit-count" data-target="431">0</span><span class="plus">+</span>
@@ -311,7 +360,7 @@
         <p class="empty-note">No experience added yet.</p>
         {% endfor %}
 
-        <div class="subhead" style="margin-top: 24px;">Education</div>
+        <div class="subhead" style="margin-top:24px;">Education</div>
         {% for edu in educations %}
         <div class="timeline-item">
             <h3>{{ edu.degree }}</h3>
@@ -345,7 +394,49 @@
                         <span class="tech-tag">{{ project.tech_used }}</span>
                     </div>
                     {% endif %}
-                    <div class="card-links">
+
+                    <!-- ── PROJECT MEDIA GALLERY ── -->
+                    {% if project.media_files.all %}
+                    <div class="project-media">
+                        {% for media in project.media_files.all %}
+                            {% if media.media_type == 'image' and media.file %}
+                            <div class="media-item">
+                                <img src="{{ media.file.url }}" alt="{{ media.caption }}"
+                                     class="media-thumb" onclick="openLightbox('{{ media.file.url }}')">
+                                {% if media.caption %}<p class="media-caption">{{ media.caption }}</p>{% endif %}
+                            </div>
+
+                            {% elif media.media_type == 'youtube' and media.external_url %}
+                            <div class="media-item">
+                                <div class="video-wrap">
+                                    <iframe src="{{ media.get_youtube_embed }}"
+                                            frameborder="0" allowfullscreen
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                                    </iframe>
+                                </div>
+                                {% if media.caption %}<p class="media-caption">{{ media.caption }}</p>{% endif %}
+                            </div>
+
+                            {% elif media.media_type == 'video' and media.file %}
+                            <div class="media-item">
+                                <video controls class="media-video">
+                                    <source src="{{ media.file.url }}">
+                                </video>
+                                {% if media.caption %}<p class="media-caption">{{ media.caption }}</p>{% endif %}
+                            </div>
+
+                            {% elif media.media_type == 'external' and media.external_url %}
+                            <div class="media-item">
+                                <a href="{{ media.external_url }}" target="_blank" class="external-link">
+                                    🔗 {{ media.caption|default:"View Resource" }}
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="card-links" style="margin-top:14px;">
                         {% if project.github_link %}<a href="{{ project.github_link }}" target="_blank" rel="noopener">Code</a>{% endif %}
                         {% if project.live_link %}<a href="{{ project.live_link }}" target="_blank" rel="noopener">Live Demo</a>{% endif %}
                     </div>
@@ -359,29 +450,26 @@
 
     <div class="glass-divider"></div>
 
-    <!-- ── SKILLS (CATEGORIZED & FILTERABLE) ── -->
+    <!-- ── SKILLS ── -->
     <section class="section fade-section" id="skills">
         <span class="section-tag">Toolbox</span>
         <h2 class="section-title">Skills &amp; Technologies</h2>
 
-        <!-- Filter Buttons -->
         <div class="skills-filter-btns">
-            <button class="filter-btn active" onclick="filterSkills('all', this)">All</button>
-            <button class="filter-btn" onclick="filterSkills('backend', this)">Backend &amp; Languages</button>
-            <button class="filter-btn" onclick="filterSkills('database', this)">Databases</button>
-            <button class="filter-btn" onclick="filterSkills('devops', this)">DevOps &amp; Tools</button>
+            <button class="filter-btn active" onclick="filterSkills('all',this)">All</button>
+            <button class="filter-btn" onclick="filterSkills('backend',this)">Backend &amp; Languages</button>
+            <button class="filter-btn" onclick="filterSkills('database',this)">Databases</button>
+            <button class="filter-btn" onclick="filterSkills('devops',this)">DevOps &amp; Tools</button>
         </div>
 
         {% regroup skills by get_category_display as skill_categories %}
         {% for category in skill_categories %}
         <div class="skill-category-group" data-category="{{ category.grouper|slugify }}">
             <div class="subhead">{{ category.grouper }}</div>
-            <div class="skills-list" style="margin-bottom: 24px;">
+            <div class="skills-list" style="margin-bottom:24px;">
                 {% for skill in category.list %}
                 <span class="skill-badge" data-skill-name="{{ skill.name|lower }}">
-                    {% if skill.get_icon_class %}
-                        <i class="{{ skill.get_icon_class }}"></i>
-                    {% endif %}
+                    {% if skill.get_icon_class %}<i class="{{ skill.get_icon_class }}"></i>{% endif %}
                     {{ skill.name }}
                 </span>
                 {% endfor %}
@@ -410,7 +498,7 @@
                     {% if cert.year %}<p><small>{{ cert.year }}</small></p>{% endif %}
                     {% if cert.certificate_file %}
                     <div class="card-links">
-                        <a href="{{ cert.certificate_file.url }}" target="_blank" rel="noopener">View Certificate</a>
+                        <a href="{{ cert.certificate_file }}" target="_blank" rel="noopener">View Certificate</a>
                     </div>
                     {% endif %}
                 </div>
@@ -465,25 +553,39 @@
 
 </div>
 
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="Preview">
+</div>
+
 <!-- ── SCRIPTS ── -->
 <script>
-    /* ── REALTIME BACKEND & GITHUB STATS SYNC SCRIPT ── */
+    /* Lightbox */
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    /* Analytics */
     async function fetchBackendAnalytics() {
         try {
             const res = await fetch('/api/v1/analytics/');
             if (res.ok) {
                 const data = await res.json();
                 if (data && data.length > 0) {
-                    const stats = data[0];
-                    if (stats.projects_built) document.getElementById('repo-count').setAttribute('data-target', stats.projects_built);
-                    if (stats.apis_designed) document.getElementById('api-count').setAttribute('data-target', stats.apis_designed);
-                    if (stats.uptime_percentage) document.getElementById('uptime-count').setAttribute('data-target', stats.uptime_percentage);
-                    if (stats.git_commits) document.getElementById('commit-count').setAttribute('data-target', stats.git_commits);
+                    const s = data[0];
+                    if (s.projects_built) document.getElementById('repo-count').setAttribute('data-target', s.projects_built);
+                    if (s.apis_designed)  document.getElementById('api-count').setAttribute('data-target', s.apis_designed);
+                    if (s.uptime_percentage) document.getElementById('uptime-count').setAttribute('data-target', s.uptime_percentage);
+                    if (s.git_commits)    document.getElementById('commit-count').setAttribute('data-target', s.git_commits);
                 }
             }
-        } catch (e) {
-            console.log('Using default analytics fallback values:', e);
-        }
+        } catch(e) { console.log('Analytics fallback:', e); }
     }
 
     {% if profile.github_url %}
@@ -491,88 +593,51 @@
     const githubUsername = githubUrl.replace(/\/$/, "").split("/").pop();
 
     async function fetchGitHubStats() {
-        // ১. আগে ব্যাকএন্ড ডাটাবেজ API থেকে ইনস্ট্যান্ট ডাটা আনি
         await fetchBackendAnalytics();
-
-        // ২. যদি GitHub API রেসপন্স করে তবে GitHub লাইভ কাউন্ট যুক্ত হবে
-        if (!githubUsername) {
-            startCounters();
-            return;
-        }
-        
+        if (!githubUsername) { startCounters(); return; }
         try {
             const userRes = await fetch(`https://api.github.com/users/${githubUsername}`);
             if (userRes.ok) {
                 const userData = await userRes.json();
-                const totalRepos = userData.public_repos;
-                if (totalRepos) {
-                    document.getElementById('repo-count').setAttribute('data-target', totalRepos);
-                }
+                if (userData.public_repos) document.getElementById('repo-count').setAttribute('data-target', userData.public_repos);
             }
-
             const reposRes = await fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`);
             if (reposRes.ok) {
-                const reposData = await reposRes.json();
-                let totalCommits = 0;
-                const commitPromises = reposData.map(async (repo) => {
+                const repos = await reposRes.json();
+                const commitCounts = await Promise.all(repos.map(async repo => {
                     try {
-                        const commitRes = await fetch(`https://api.github.com/repos/${githubUsername}/${repo.name}/commits?per_page=1`);
-                        if (commitRes.ok) {
-                            const linkHeader = commitRes.headers.get('Link');
-                            if (linkHeader) {
-                                const match = linkHeader.match(/page=(\d+)>; rel="last"/);
-                                return match ? parseInt(match[1]) : 1;
-                            }
+                        const r = await fetch(`https://api.github.com/repos/${githubUsername}/${repo.name}/commits?per_page=1`);
+                        if (r.ok) {
+                            const link = r.headers.get('Link');
+                            if (link) { const m = link.match(/page=(\d+)>; rel="last"/); return m ? parseInt(m[1]) : 1; }
                             return 1;
                         }
-                    } catch (e) {
-                        return 0;
-                    }
+                    } catch(e) { return 0; }
                     return 0;
-                });
-
-                const commitCounts = await Promise.all(commitPromises);
-                totalCommits = commitCounts.reduce((a, b) => a + b, 0);
-
-                if (totalCommits > 0) {
-                    document.getElementById('commit-count').setAttribute('data-target', totalCommits);
-                }
+                }));
+                const total = commitCounts.reduce((a,b) => a+b, 0);
+                if (total > 0) document.getElementById('commit-count').setAttribute('data-target', total);
             }
-
-        } catch (error) {
-            console.log('GitHub API Limit/Fallback in use:', error);
-        } finally {
-            startCounters();
-        }
+        } catch(e) { console.log('GitHub API fallback:', e); }
+        finally { startCounters(); }
     }
     {% else %}
-    async function fetchGitHubStats() { 
-        await fetchBackendAnalytics();
-        startCounters(); 
-    }
+    async function fetchGitHubStats() { await fetchBackendAnalytics(); startCounters(); }
     {% endif %}
 
     let animated = false;
-
     function startCounters() {
         const counters = document.querySelectorAll('.metric-number');
-        const metricsSection = document.querySelector('.metrics-section');
-        if (!metricsSection) return;
-
-        const sectionPos = metricsSection.getBoundingClientRect().top;
-        const screenPos = window.innerHeight / 1.2;
-
-        if (sectionPos < screenPos && !animated) {
+        const section = document.querySelector('.metrics-section');
+        if (!section) return;
+        if (section.getBoundingClientRect().top < window.innerHeight / 1.2 && !animated) {
             animated = true;
             counters.forEach(counter => {
                 const target = +counter.getAttribute('data-target');
                 const isDecimal = target % 1 !== 0;
-                const duration = 2000;
-                const stepTime = 20;
-                const steps = duration / stepTime;
+                const steps = 2000 / 20;
                 const increment = target / steps;
                 let current = 0;
-
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
@@ -581,61 +646,42 @@
                     } else {
                         counter.innerText = isDecimal ? current.toFixed(1) : Math.ceil(current);
                     }
-                }, stepTime);
+                }, 20);
             });
         }
     }
 
-    /* ── DYNAMIC SKILLS FILTER LOGIC (SMART & HYBRID) ── */
+    /* Skills Filter */
     function filterSkills(category, btnElement) {
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
-
-        const groups = document.querySelectorAll('.skill-category-group');
-        const dbKeywords = ['sql', 'postgres', 'mysql', 'mongo', 'redis', 'oracle', 'sqlite', 'database', 'db', 'firebase', 'mariadb', 'cassandra'];
-
-        groups.forEach(group => {
+        const dbKeywords = ['sql','postgres','mysql','mongo','redis','oracle','sqlite','database','db','firebase','mariadb','cassandra'];
+        document.querySelectorAll('.skill-category-group').forEach(group => {
             const catName = group.getAttribute('data-category').toLowerCase();
             const badges = group.querySelectorAll('.skill-badge');
-
             if (category === 'all') {
                 group.style.display = 'block';
                 badges.forEach(b => b.style.display = 'inline-flex');
             } else if (category === 'database') {
-                let hasMatchedSkill = false;
-
+                let matched = false;
                 if (catName.includes('database') || catName.includes('db')) {
-                    hasMatchedSkill = true;
+                    matched = true;
                     badges.forEach(b => b.style.display = 'inline-flex');
                 } else {
                     badges.forEach(badge => {
-                        const skillName = badge.getAttribute('data-skill-name') || '';
-                        const isDbSkill = dbKeywords.some(kw => skillName.includes(kw));
-                        if (isDbSkill) {
-                            badge.style.display = 'inline-flex';
-                            hasMatchedSkill = true;
-                        } else {
-                            badge.style.display = 'none';
-                        }
+                        const n = badge.getAttribute('data-skill-name') || '';
+                        const isDb = dbKeywords.some(kw => n.includes(kw));
+                        badge.style.display = isDb ? 'inline-flex' : 'none';
+                        if (isDb) matched = true;
                     });
                 }
-
-                group.style.display = hasMatchedSkill ? 'block' : 'none';
-
+                group.style.display = matched ? 'block' : 'none';
             } else if (category === 'backend') {
                 badges.forEach(b => b.style.display = 'inline-flex');
-                if (catName.includes('backend') || catName.includes('language') || catName.includes('framework')) {
-                    group.style.display = 'block';
-                } else {
-                    group.style.display = 'none';
-                }
+                group.style.display = (catName.includes('backend') || catName.includes('language') || catName.includes('framework')) ? 'block' : 'none';
             } else if (category === 'devops') {
                 badges.forEach(b => b.style.display = 'inline-flex');
-                if (catName.includes('tool') || catName.includes('devops') || catName.includes('other')) {
-                    group.style.display = 'block';
-                } else {
-                    group.style.display = 'none';
-                }
+                group.style.display = (catName.includes('tool') || catName.includes('devops') || catName.includes('other')) ? 'block' : 'none';
             }
         });
     }

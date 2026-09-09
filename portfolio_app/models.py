@@ -33,15 +33,51 @@ class ProjectMedia(models.Model):
     MEDIA_TYPE_CHOICES = (
         ('image', 'Image'),
         ('video', 'Video'),
+        ('youtube', 'YouTube Link'),
+        ('external', 'External URL'),
     )
-    
-    project = models.ForeignKey(Project, related_name='media_files', on_delete=models.CASCADE)
-    file = models.FileField(upload_to='project_media/')
-    media_type = models.CharField(max_length=10, choices=MEDIA_TYPE_CHOICES, default='image')
+
+    project = models.ForeignKey(
+        Project,
+        related_name='media_files',
+        on_delete=models.CASCADE
+    )
+    file = models.ImageField(
+        upload_to='project_media/',
+        blank=True,
+        null=True,
+        help_text="ছবি বা ভিডিও আপলোড করো"
+    )
+    external_url = models.URLField(
+        blank=True,
+        null=True,
+        help_text="YouTube/Vimeo/External URL দাও"
+    )
+    media_type = models.CharField(
+        max_length=20,
+        choices=MEDIA_TYPE_CHOICES,
+        default='image'
+    )
     caption = models.CharField(max_length=250, blank=True, null=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return f"{self.project.title} - {self.media_type}"
+
+    def get_youtube_embed(self):
+        """YouTube URL থেকে embed URL বানায়"""
+        if self.media_type == 'youtube' and self.external_url:
+            url = self.external_url
+            if 'watch?v=' in url:
+                video_id = url.split('watch?v=')[1].split('&')[0]
+                return f"https://www.youtube.com/embed/{video_id}"
+            elif 'youtu.be/' in url:
+                video_id = url.split('youtu.be/')[1].split('?')[0]
+                return f"https://www.youtube.com/embed/{video_id}"
+        return None
 
 
 class Skill(models.Model):

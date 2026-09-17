@@ -4,14 +4,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mil8_pmckzjr5vtm_ia+cp@ha^p-$6dco*@ts%uuzo274(jk@y')
+# ── SECURITY ──
+SECRET_KEY = os.environ['SECRET_KEY']  # কোনো fallback নেই — intentional
 
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.onrender.com'
+    'https://*.onrender.com',
 ]
 
 INSTALLED_APPS = [
@@ -95,9 +96,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 WHITENOISE_MANIFEST_STRICT = False
 
-# WhiteNoise দিয়ে static files serve করবে
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -109,36 +107,35 @@ STORAGES = {
 
 # ── CLOUDINARY ──
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'dxk8k2qkg'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '363587151294176'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'r69rvAmZcxKS8L3I0C_doJPur8w'),
+    'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
+    'API_KEY': os.environ['CLOUDINARY_API_KEY'],
+    'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
 }
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # ── EMAIL ──
-# ── EMAIL ──
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'nawabsakib5@gmail.com')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', 'nawabsakib5@gmail.com')
-NOTIFY_EMAIL = 'nawabsakib5@gmail.com'
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', '')
+NOTIFY_EMAIL = os.getenv('NOTIFY_EMAIL', '')
 
 # ── REST FRAMEWORK ──
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '5/day',
         'contact': '3/hour',
-        'user': '100/day'
+        'user': '100/day',
     }
 }
 

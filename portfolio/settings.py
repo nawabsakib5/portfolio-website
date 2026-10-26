@@ -1,6 +1,8 @@
 import os
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -110,6 +112,8 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
     'API_KEY': os.environ['CLOUDINARY_API_KEY'],
     'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
+    'MEDIA_TAG': 'portfolio',        # সব file এই tag পাবে
+    'PREFIX': 'portfolio_website',   # এই folder-এ upload হবে
 }
 
 MEDIA_URL = '/media/'

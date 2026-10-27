@@ -9,7 +9,7 @@ class Profile(models.Model):
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
-    cv = models.FileField(upload_to='cv/', blank=True, null=True)
+    cv = models.CharField(max_length=500, blank=True, null=True, help_text="Cloudinary URL")
 
     def __str__(self):
         return self.name
@@ -168,7 +168,7 @@ class Certificate(models.Model):
     issuer = models.CharField(max_length=150, help_text="e.g. NSDA")
     level = models.CharField(max_length=50, blank=True, help_text="e.g. Level-4, 360 hours")
     year = models.CharField(max_length=50, blank=True)
-    certificate_file = models.FileField(upload_to='certificates/', blank=True, null=True)
+    certificate_file = models.CharField(max_length=500, blank=True, null=True, help_text="Cloudinary URL")
     order = models.IntegerField(default=0)
 
     class Meta:

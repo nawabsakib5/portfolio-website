@@ -203,12 +203,26 @@
 
     /* ── PROJECT MEDIA GALLERY ── */
     .project-media {
-        margin-top: 16px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
     }
-    .media-item { border-radius: 10px; overflow: hidden; }
+    .gallery-item-hidden { display: none; }
+    .media-item { border-radius: 10px; overflow: hidden; margin-top: 16px; }
+    .card-img-wrap { position: relative; }
+    .photo-badge {
+        position: absolute;
+        right: 12px; bottom: 12px;
+        background: rgba(0,0,0,0.65);
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.2);
+        pointer-events: none;
+        z-index: 3;
+    }
     .media-thumb {
         width: 100%;
         height: 160px;
@@ -449,12 +463,8 @@
                     <div class="project-media">
                         {% for media in project.media_files.all %}
                             {% if media.media_type == 'image' and media.file %}
-                            <div class="media-item">
-                                <img src="{{ media.file.url }}" alt="{{ media.caption }}"
-                                     class="media-thumb" data-gallery="proj-{{ project.id }}" data-src="{{ media.file.url }}"
-                                     onclick="openGallery(this)">
-                                {% if media.caption %}<p class="media-caption">{{ media.caption }}</p>{% endif %}
-                            </div>
+                            <span class="gallery-item-hidden" data-gallery="proj-{{ project.id }}"
+                                  data-src="{{ media.file.url }}"></span>
 
                             {% elif media.media_type == 'youtube' and media.external_url %}
                             <div class="media-item">
@@ -646,6 +656,19 @@
         if (e.key === 'ArrowRight') stepGallery(1);
         if (e.key === 'ArrowLeft') stepGallery(-1);
     });
+    /* "N photos" badge on cards that have more than one image */
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.card-img-wrap[data-gallery]').forEach(wrap => {
+            const count = document.querySelectorAll('[data-gallery="' + wrap.dataset.gallery + '"]').length;
+            if (count > 1) {
+                const b = document.createElement('span');
+                b.className = 'photo-badge';
+                b.textContent = '\u{1F4F7} ' + count + ' photos';
+                wrap.appendChild(b);
+            }
+        });
+    });
+
     /* Swipe on touch devices */
     (function () {
         let startX = 0;

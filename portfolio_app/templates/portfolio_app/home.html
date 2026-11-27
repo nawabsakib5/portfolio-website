@@ -191,6 +191,14 @@
     }
     .skill-category-group { transition: all 0.4s ease; }
 
+    /* ── PROJECT MAIN IMAGE (clickable) ── */
+    .card-img-wrap { overflow: hidden; }
+    .card-img {
+        cursor: zoom-in;
+        transition: transform 0.3s ease;
+    }
+    .card-img:hover { transform: scale(1.03); }
+
     /* ── PROJECT MEDIA GALLERY ── */
     .project-media {
         margin-top: 16px;
@@ -204,7 +212,7 @@
         height: 160px;
         object-fit: cover;
         border-radius: 10px;
-        cursor: pointer;
+        cursor: zoom-in;
         transition: transform 0.3s;
         border: 1px solid var(--glass-border);
     }
@@ -261,13 +269,15 @@
         z-index: 9999;
         align-items: center;
         justify-content: center;
+        cursor: zoom-out;
     }
     .lightbox.active { display: flex; }
     .lightbox img {
-        max-width: 90vw;
-        max-height: 90vh;
+        max-width: 95vw;
+        max-height: 92vh;
         border-radius: 10px;
         object-fit: contain;
+        box-shadow: 0 10px 60px rgba(0,0,0,0.7);
     }
     .lightbox-close {
         position: absolute;
@@ -383,7 +393,8 @@
             <div class="card">
                 {% if project.image %}
                 <div class="card-img-wrap">
-                    <img class="card-img" src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <img class="card-img" src="{{ project.image.url }}" alt="{{ project.title }}"
+                         onclick="openLightbox('{{ project.image.url }}')">
                 </div>
                 {% endif %}
                 <div class="card-body">

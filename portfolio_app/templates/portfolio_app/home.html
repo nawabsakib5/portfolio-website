@@ -289,6 +289,43 @@
         cursor: pointer;
         background: none;
         border: none;
+        z-index: 2;
+    }
+    .lb-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px; height: 52px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.25);
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        font-size: 1.6rem;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
+        transition: background 0.2s;
+    }
+    .lb-nav:hover { background: rgba(255,255,255,0.22); }
+    .lb-prev { left: 24px; }
+    .lb-next { right: 24px; }
+    .lb-counter {
+        position: absolute;
+        bottom: 22px; left: 50%;
+        transform: translateX(-50%);
+        color: #cbd5e1;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        background: rgba(0,0,0,0.5);
+        padding: 6px 16px;
+        border-radius: 20px;
+        z-index: 2;
+    }
+    .lb-single .lb-nav, .lb-single .lb-counter { display: none; }
+    @media (max-width: 600px) {
+        .lb-nav { width: 40px; height: 40px; font-size: 1.3rem; }
+        .lb-prev { left: 8px; }
+        .lb-next { right: 8px; }
     }
 </style>
 
@@ -394,7 +431,7 @@
             {% for project in projects %}
             <div class="card">
                 {% if project.image %}
-                <div class="card-img-wrap" onclick="openLightbox('{{ project.image.url }}')">
+                <div class="card-img-wrap" data-gallery="proj-{{ project.id }}" data-src="{{ project.image.url }}" onclick="openGallery(this)">
                     <img class="card-img" src="{{ project.image.url }}" alt="{{ project.title }}">
                 </div>
                 {% endif %}
@@ -414,7 +451,8 @@
                             {% if media.media_type == 'image' and media.file %}
                             <div class="media-item">
                                 <img src="{{ media.file.url }}" alt="{{ media.caption }}"
-                                     class="media-thumb" onclick="openLightbox('{{ media.file.url }}')">
+                                     class="media-thumb" data-gallery="proj-{{ project.id }}" data-src="{{ media.file.url }}"
+                                     onclick="openGallery(this)">
                                 {% if media.caption %}<p class="media-caption">{{ media.caption }}</p>{% endif %}
                             </div>
 
@@ -568,20 +606,56 @@
 <!-- ── LIGHTBOX ── -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <img id="lightbox-img" src="" alt="Preview">
+    <button class="lb-nav lb-prev" onclick="event.stopPropagation(); stepGallery(-1)" aria-label="Previous">&#10094;</button>
+    <img id="lightbox-img" src="" alt="Preview" onclick="event.stopPropagation()">
+    <button class="lb-nav lb-next" onclick="event.stopPropagation(); stepGallery(1)" aria-label="Next">&#10095;</button>
+    <div class="lb-counter" id="lb-counter"></div>
 </div>
 
 <!-- ── SCRIPTS ── -->
 <script>
-    /* Lightbox */
-    function openLightbox(src) {
-        document.getElementById('lightbox-img').src = src;
+    /* Lightbox + Gallery slider */
+    let galleryList = [];
+    let galleryIndex = 0;
+
+    function openGallery(el) {
+        const group = el.dataset.gallery;
+        const items = Array.from(document.querySelectorAll('[data-gallery="' + group + '"]'));
+        galleryList = items.map(i => i.dataset.src);
+        galleryIndex = Math.max(0, items.indexOf(el));
+        showGallery();
         document.getElementById('lightbox').classList.add('active');
+    }
+    function showGallery() {
+        const lb = document.getElementById('lightbox');
+        document.getElementById('lightbox-img').src = galleryList[galleryIndex];
+        document.getElementById('lb-counter').textContent = (galleryIndex + 1) + ' / ' + galleryList.length;
+        lb.classList.toggle('lb-single', galleryList.length <= 1);
+    }
+    function stepGallery(dir) {
+        if (galleryList.length <= 1) return;
+        galleryIndex = (galleryIndex + dir + galleryList.length) % galleryList.length;
+        showGallery();
     }
     function closeLightbox() {
         document.getElementById('lightbox').classList.remove('active');
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') stepGallery(1);
+        if (e.key === 'ArrowLeft') stepGallery(-1);
+    });
+    /* Swipe on touch devices */
+    (function () {
+        let startX = 0;
+        const lb = document.getElementById('lightbox');
+        lb.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; }, {passive: true});
+        lb.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 50) stepGallery(dx < 0 ? 1 : -1);
+        }, {passive: true});
+    })();
 
     /* Analytics */
     async function fetchBackendAnalytics() {
